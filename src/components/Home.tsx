@@ -1,14 +1,14 @@
-import { Disclosure } from "@headlessui/react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 export default function Home() {
     const location = useLocation(); // Get the current location
-    const pathname = location.pathname || '/'; // Get the pathname
+    const _pathname = location.pathname || '/'; // Get the pathname
 
-    return (
-        <div className="flex-col pt-16">
+    return (        
+        <div className="flex-col">
             <div className="font-thin text-3xl pb-12">
-                <p>My name is Nakarin and I make music! Here's my latest work:</p>
+                <p>Hi, my name is Nakarin and I make music!</p>
+                <p className="pt-2">Here are my latest works:</p>
             </div>
 
             <div className="grid xl:grid-cols-3 lg:grid-cols-1 2xl:grid-cols-3 justify-evenly md:grid-cols-1 sm:grid-cols-1 gap-16">
@@ -17,7 +17,7 @@ export default function Home() {
                     <div className="font-thin text-5xl pb-8">
                         <h1>Original</h1>
                     </div>
-                    <div className="relative group overflow-hidden w-full h-[200px] rounded-lg border-2 dark:border-[#1b3a4f] border-[#B9E4C9] transition-transform duration-200 hover:scale-105">
+                    <div className="relative group overflow-hidden w-full h-[250px] rounded-lg border-2 dark:border-[#1b3a4f] border-[#B9E4C9] transition-transform duration-200 hover:scale-105">
                         <a href="https://www.youtube.com/watch?v=zaLPtByJEG0" target="_blank" rel="noopener noreferrer" className="absolute inset-0 z-10">
                             <img
                                 src="/latest/latestOriginal.jpg" // Adjust the path as needed
@@ -29,7 +29,7 @@ export default function Home() {
                     </div>
 
                     <div>
-                        <h2 className="font-bold text-3xl pb-2">空に向かおう <span className="font-thin font-normal">feat. KAFU </span></h2>
+                        <h2 className="font-bold text-3xl pb-2">空に向かおう <span className="font-normal">feat. KAFU </span></h2>
                         <p className="italic">(transl. Towards the sky)</p>
                         <p className="font-thin pt-4">March 2024</p>
                     </div>
@@ -51,7 +51,7 @@ export default function Home() {
                     </div> */}
 
 
-                    <div className="relative group overflow-hidden w-full h-[200px] rounded-lg border-2 dark:border-[#1b3a4f] border-[#B9E4C9] transition-transform duration-200 hover:scale-105">
+                    <div className="relative group overflow-hidden w-full h-[250px] rounded-lg border-2 dark:border-[#1b3a4f] border-[#B9E4C9] transition-transform duration-200 hover:scale-105">
                         <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" className="absolute inset-0 z-10">
                             <img
                                 src="/latest/latestRemix.png" // Adjust the path as needed
@@ -74,7 +74,7 @@ export default function Home() {
                     <div className="font-thin text-5xl pb-8">
                         <h1>Touhou</h1>
                     </div>
-                    <div className="relative group overflow-hidden w-full h-[200px] rounded-lg border-2 dark:border-[#1b3a4f] border-[#B9E4C9] transition-transform duration-200 hover:scale-105">
+                    <div className="relative group overflow-hidden w-full h-[250px] rounded-lg border-2 dark:border-[#1b3a4f] border-[#B9E4C9] transition-transform duration-200 hover:scale-105">
                         <a href="https://c102-meditations.netlify.app/" target="_blank" rel="noopener noreferrer" className="absolute inset-0 z-10">
                             <img
                                 src="/latest/latestTouhou.png" // Adjust the path as needed

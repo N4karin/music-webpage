@@ -3,10 +3,9 @@ import { useLocation } from "react-router-dom";
 import { Button } from "@headlessui/react";
 import { useState } from "react";
 
-export default function About() {
+export default function Connect() {
     const location = useLocation(); // Get the current location
-    const 
-    _pathname = location.pathname || '/'; // Get the pathname
+    const _pathname = location.pathname || '/'; // Get the pathname
 
     const [emailSubmitted, setEmailSubmitted] = useState(false)
 
@@ -60,7 +59,7 @@ export default function About() {
         <div className="grid grid-cols-1 justify-between pt-14 gap-8 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2">
             <div className="flex flex-col">
                 <h1 className="font-bold text-5xl pb-4">
-                    about
+                    connect
                 </h1>
 
                 <div>
