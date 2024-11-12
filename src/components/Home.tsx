@@ -1,9 +1,4 @@
-import { useLocation } from "react-router-dom";
-
 export default function Home() {
-    const location = useLocation(); // Get the current location
-    const _pathname = location.pathname || '/'; // Get the pathname
-
     return (        
         <div className="flex-col">
             <div className="font-thin text-3xl pb-12">

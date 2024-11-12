@@ -1,12 +1,8 @@
 "use client";
-import { useLocation } from "react-router-dom";
 import { Button } from "@headlessui/react";
 import { useState } from "react";
 
 export default function About() {
-    const location = useLocation(); // Get the current location
-    const 
-    _pathname = location.pathname || '/'; // Get the pathname
 
     const [emailSubmitted, setEmailSubmitted] = useState(false)
 
