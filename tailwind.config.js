@@ -7,6 +7,7 @@ export default {
   theme: {
     extend: {},
   },
+  darkMode: 'class',
   plugins: [
     import('@tailwindcss/typography'),
     import('@tailwindcss/forms'),
