@@ -102,8 +102,8 @@ export default function About() {
 
             <div className="grid md:grid-cols-2 pb-4 gap-8 z-10">
                 <div>
-                    <h1 className="font-medium text-xl pb-4">
-                        {"Let's talk! :)"}
+                    <h1 className="font-thin text-4xl pt-2 pb-4">
+                        {"let's talk! :)"}
                     </h1>
 
                     <p className="prose dark:prose-invert text-justify">
