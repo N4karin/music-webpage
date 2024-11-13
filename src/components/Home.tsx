@@ -15,7 +15,7 @@ export default function Home() {
                     <div className="relative group overflow-hidden w-full h-[250px] rounded-lg border-2 dark:border-[#1b3a4f] border-[#B9E4C9] transition-transform duration-200 hover:scale-105">
                         <a href="https://www.youtube.com/watch?v=zaLPtByJEG0" target="_blank" rel="noopener noreferrer" className="absolute inset-0 z-10">
                             <img
-                                src="/latest/latestOriginal.jpg" // Adjust the path as needed
+                                src="/latest/latestOriginal.jpg" 
                                 alt="latestOriginal"
                                 className="object-cover transition-transform duration-1000 group-hover:scale-110 ease-in-out w-full h-full"
                             />
@@ -49,7 +49,7 @@ export default function Home() {
                     <div className="relative group overflow-hidden w-full h-[250px] rounded-lg border-2 dark:border-[#1b3a4f] border-[#B9E4C9] transition-transform duration-200 hover:scale-105">
                         <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" className="absolute inset-0 z-10">
                             <img
-                                src="/latest/latestRemix.png" // Adjust the path as needed
+                                src="/latest/latestRemix.png"
                                 alt="latestRemix"
                                 className="object-cover object-top transition-transform duration-1000 group-hover:scale-110 ease-in-out w-full h-full"
                             />
@@ -72,7 +72,7 @@ export default function Home() {
                     <div className="relative group overflow-hidden w-full h-[250px] rounded-lg border-2 dark:border-[#1b3a4f] border-[#B9E4C9] transition-transform duration-200 hover:scale-105">
                         <a href="https://c102-meditations.netlify.app/" target="_blank" rel="noopener noreferrer" className="absolute inset-0 z-10">
                             <img
-                                src="/latest/latestTouhou.png" // Adjust the path as needed
+                                src="/latest/latestTouhou.jpg"
                                 alt="latestTouhou"
                                 className="object-cover transition-transform duration-1000 group-hover:scale-110 ease-in-out w-full h-full"
                             />
