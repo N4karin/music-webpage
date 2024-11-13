@@ -38,7 +38,7 @@ export default function Navbar() {
 
                     {/* Social Media Section */}
                     <div className="py-4">
-                        <div className="font-bold pb-5 text-center">explore</div>
+                        <div className="font-bold pb-5 text-center"></div>
                         <div className="grid grid-cols-2 gap-2 text-left pl-8">
                             <Link to="https://open.spotify.com/artist/7o1NIFsPdL6tkrvb3uZVqx?si=zse4UKVvTOCxreBuO_p6Bg" className="hover:text-[#FFA07A] transition-all duration-150" target="_blank" rel="noopener noreferrer">
                                 <span className="hidden xl:inline 2xl:inline lg:inline">spotify</span>
