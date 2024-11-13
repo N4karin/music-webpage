@@ -18,7 +18,7 @@ const App: React.FC = () => {
             <ThemeBtn />
           </div>
           <Navbar />
-          <div className="flex-grow p-4 md:p-6 lg:p-8 overflow-auto -z-0">
+          <div className="flex-grow p-4 pt-20 2xl:pt-4 xl:pt-4 lg:pt-4 md:pt-4 overflow-auto -z-0">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/home" element={<Home />} />

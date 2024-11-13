@@ -6,7 +6,7 @@ export default function Navbar() {
     const pathname = location.pathname || '/'; // Get the pathname
 
     return (
-        <Disclosure as="nav" className="w-32 2xl:min-w-64 xl:min-w-64 lg:min-w-64 h-full rounded-l-xl border-gray-700 border-r-2">
+        <Disclosure as="nav" className="w-32 2xl:min-w-64 xl:min-w-64 lg:min-w-64 h-full rounded-l-xl dark:border-gray-700 border-[#B9E4C9] border-r-2">
             {() => (
             // {({ open }) => (
                 <div className="flex flex-col h-full overflow-y-auto">
@@ -18,7 +18,7 @@ export default function Navbar() {
                     </div>
 
                     {/* Navigation Links Section */}
-                    <div className="flex-grow flex flex-col justify-evenly py-4 border-gray-700 border-t-2">
+                    <div className="flex-grow flex flex-col justify-evenly py-4 border-[#B9E4C9]">
                         <Link to="/home" className={`flex items-center justify-center relative h-12 overflow-hidden transition-all duration-200 before:absolute before:bottom-0 before:left-0 before:right-0 before:top-0 before:m-auto before:h-0 before:w-0 before:rounded-sm dark:before:bg-[#FFA07A] before:bg-[#FFA07A] before:duration-300 hover:before:h-20 hover:before:w-64 text-lg ${pathname === '/home' ? 'text-[#FFA07A] border-[#FFA07A] border-l-4 ' : ''} hover:text-gray-100`}>
                             <span className="relative z-10">home</span>
                         </Link>

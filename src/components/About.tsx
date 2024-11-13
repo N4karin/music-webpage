@@ -77,8 +77,10 @@ export default function About() {
                     </h1>
 
                     <p className="prose dark:prose-invert text-justify">
-                        I am currently looking for new career opportunities, my inbox is always open.
-                        Whether you want to say hi or have a question, I will try my best to get back to you!
+                        I am open for working together with like-minded creatives, be it with illustrators, vocalists, doing remixes and the likes! Don't hesitate to contact me, messages through this form will get directly to me.
+                    </p>
+                    <p className="prose dark:prose-invert text-justify pt-2">
+                        日本語はまだ勉強してるけど、もし一緒に何かのプロジェクトしたかったら気軽に連絡してください！特に歌い手やイラストレーターと働きたい！
                     </p>
 
                     <div className="flex space-x-5 pt-6">
@@ -107,12 +109,12 @@ export default function About() {
                     <div className="bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-indigo-200 dark:from-indigo-950 to-transparent rounded-full h-80 w-80 z-0 blur-xl absolute translate-x-1/2 -translate-y-10 " />
                     <form className="flex flex-col gap-0 relative" onSubmit={handleSubmit}>
                         <label htmlFor="name" typeof="text" className="">
-                            Your Name <span className="text-red-500">*</span>
+                            Name <span className="text-red-500">*</span>
                         </label>
                         <input type="text" name="name" id="name" required placeholder="John Doe" className="text-black rounded-md border-indigo-500 dark:bg-gray-200" />
 
                         <label htmlFor="email" typeof="email" className="pt-4">
-                            Your E-Mail Address <span className="text-red-500">*</span>
+                            E-Mail Address <span className="text-red-500">*</span>
                         </label>
                         <input type="email" name="email" id="email" required placeholder="john.doe@gmail.com" className="text-black rounded-md border-indigo-500 dark:bg-gray-200" />
 
