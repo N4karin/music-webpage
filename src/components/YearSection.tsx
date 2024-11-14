@@ -1,22 +1,72 @@
-const YearSection = ({ year, filteredItems, assets, typeColors }) => {
+import { useEffect, useRef } from 'react';
+
+const YearSection = ({ year, filteredItems, assets, typeColors, isLoading }) => {
+    const itemRefs = useRef([]);
+
+    useEffect(() => {
+        itemRefs.current = itemRefs.current.slice(0, filteredItems.length);
+    }, [filteredItems]);
+
+    useEffect(() => {
+        if (!isLoading) {
+            itemRefs.current = itemRefs.current.slice(0, filteredItems.length);
+            // Create an Intersection Observer
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        const delay = entry.target.getAttribute('data-index') * 0.1; // 
+                        entry.target.style.transitionDelay = `${delay}s`;
+                        entry.target.classList.remove('invisible');
+                        entry.target.classList.add('visible');
+                    } else {
+                        entry.target.style.transitionDelay = '0s';
+                        entry.target.classList.remove('visible');
+                        entry.target.classList.add('invisible');
+                    }
+                });
+            }, {
+                rootMargin: '0px 0px',
+                threshold: 0,
+            });
+            // Observe each item
+            itemRefs.current.forEach((ref) => {
+                if (ref) observer.observe(ref);
+            });
+
+            // Clean up
+            return () => {
+                if (itemRefs.current) {
+                    itemRefs.current.forEach((ref) => {
+                        if (ref) observer.unobserve(ref);
+                    });
+                }
+            };
+        }
+    }, [isLoading, itemRefs.current]); // Add itemRefs.current as a dependency
+
     return (
         <>
-            <h1 className="pl-4 pt-4 font-bold text-3xl">{year}</h1>
-            <div className="pl-2">
+            <h1 className="font-bold text-3xl py-4 px-4">{year}</h1>
+            <div className="pl-4">
                 <div>
                     {filteredItems.length === 0 ? (
                         <p>No releases</p>
 
                     ) : (
-                        filteredItems.map((item) => (
-                            <div key={item.sys.id} className="relative group p-2 rounded-lg overflow-hidden transition-shadow duration-200">
+                        filteredItems.map((item, index) => (
+                            <div
+                                ref={(el) => (itemRefs.current[index] = el)}
+                                className="item invisible group"
+                                data-index={index}
+                                key={item.id}
+                            >
                                 {item.fields.image && assets[item.fields.image.sys.id] && (
                                     <div className="relative">
                                         <a href={item.fields.url} target='_blank' rel="noopener noreferrer">
                                             <img
                                                 src={assets[item.fields.image.sys.id]}
                                                 alt={item.fields.name}
-                                                className="object-cover transition-transform duration-200 group-hover:scale-105 ease-in-out w-full h-60 rounded-lg mb-4 border-2 border-[#FFA07A]"
+                                                className="image-rendering-smooth object-cover transition-transform duration-200 group-hover:scale-[1.05] ease-in-out w-full h-60 rounded-lg mb-4 border-2 border-[#FFA07A] shadow-md hover:shadow-lg filter contrast-[90%]"
                                             />
                                         </a>
                                         <span className={`absolute top-2 left-2 ${typeColors[item.fields.type] || 'bg-gray-300'} text-black transition-transform duration-200 group-hover:scale-110 ease-in-out text-xs font-bold px-2 py-1 rounded shadow`}>
@@ -32,7 +82,7 @@ const YearSection = ({ year, filteredItems, assets, typeColors }) => {
                                                 <p className="text-white">{item.fields.description}</p>
                                                 {item.fields.collaborators && (
                                                     <span className="text-white">
-                                                        {' '}with <a href={item.fields.collaboratorLink} className="text-[#FFA07A]">{item.fields.collaborators}</a>
+                                                        {' '}with <a href={item.fields.collaboratorLink} target='_blank' className="text-[#FFA07A]">{item.fields.collaborators}</a>
                                                     </span>
                                                 )}
                                             </div>

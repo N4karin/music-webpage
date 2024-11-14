@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import client from './contentfulClient';
 import YearSection from './YearSection';
+import Spinner from './Spinner'; // Import the Spinner component
 
 const Works = () => {
     const [items, setItems] = useState([]);
     const [assets, setAssets] = useState({}); // Store assets by ID
+    const [loading, setLoading] = useState(true); // Loading state
 
     useEffect(() => {
         // Fetch entries
@@ -25,11 +27,17 @@ const Works = () => {
                         })
                         .catch(error => {
                             console.error("Error fetching assets:", error);
+                        })
+                        .finally(() => {
+                            setLoading(false); // Set loading to false after fetching assets
                         });
+                } else {
+                    setLoading(false); // Set loading to false if no assets to fetch
                 }
             })
             .catch((error) => {
                 console.error("Error fetching entries:", error);
+                setLoading(false); // Set loading to false on error
             });
     }, []);
 
@@ -53,13 +61,19 @@ const Works = () => {
         filteredItems: filterItemsByYear(items, year),
     }));
 
+    if (loading) {
+        return <Spinner />; // Show spinner while loading
+    }
+
     return (
         <div className="works-grid">
-            {filteredItemsByYear.map(({ year, filteredItems }) => (
-                <div key={year} className="year-section">
-                    <YearSection year={year} filteredItems={filteredItems} assets={assets} typeColors={typeColors} />
-                </div>
-            ))}
+            {filteredItemsByYear
+                .filter(({ filteredItems }) => filteredItems.length > 0) // Filter out years with no items
+                .map(({ year, filteredItems }) => (
+                    <div key={year} className="year-section">
+                        <YearSection year={year} filteredItems={filteredItems} assets={assets} typeColors={typeColors} isLoading={loading} />
+                    </div>
+                ))}
         </div>
     );
 };

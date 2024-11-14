@@ -23,3 +23,22 @@
     grid-template-columns: repeat(auto-fit, minmax(300px, 0.25fr)); /* Responsive grid */
     gap: 0rem; /* Space between cards */
 }
+
+.item {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.5s, transform 0.25s;
+    transition-delay: 1s;
+}
+
+.item.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.image-rendering-smooth {
+    image-rendering: auto; /* Default rendering */
+    image-rendering: crisp-edges; /* For pixelated images */
+    image-rendering: -webkit-optimize-contrast; /* For WebKit browsers */
+    image-rendering: optimizeQuality; /* For better quality */
+}
