@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import Home from './components/Home';
 import About from './components/About';
+import Works from './components/Works';
 import { useTheme } from './components/ThemeContext';
 import Navbar from './components/Navbar';
 import './styles/globals.css'; // Make sure this imports the Google Font
@@ -23,7 +24,7 @@ const App: React.FC = () => {
               <Route path="/" element={<Home />} />
               <Route path="/home" element={<Home />} />
               <Route path="/about" element={<About />} />
-
+              <Route path="/works" element={<Works />} />
             </Routes>
           </div>
         </div>

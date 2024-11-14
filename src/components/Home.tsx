@@ -1,18 +1,20 @@
 export default function Home() {
+
+
     return (        
-        <div className="flex-col">
+        <div className="flex-col pt-20">
             <div className="font-thin text-3xl pb-8">
                 <p>hi, my name is nakarin and i make music!</p>
                 <p className="pt-2">here are my latest works:</p>
             </div>
 
-            <div className="grid xl:grid-cols-3 lg:grid-cols-1 2xl:grid-cols-3 justify-evenly md:grid-cols-1 sm:grid-cols-1 gap-16">
+            <div className="grid xl:grid-cols-3 lg:grid-cols-1 2xl:grid-cols-3 justify-evenly md:grid-cols-1 sm:grid-cols-1 gap-4">
                 {/* Column for Original */}
                 <div className="flex-col space-y-2">
                     <div className="font-thin text-5xl pb-8">
                         <h1>original</h1>
                     </div>
-                    <div className="relative group overflow-hidden w-full h-[250px] rounded-lg border-2 dark:border-[#1b3a4f] border-[#B9E4C9] transition-transform duration-200 hover:scale-105">
+                    <div className="relative group overflow-hidden w-full h-[250px] rounded-lg border-2 dark:border-[#FFA07A] border-[#FFA07A] transition-transform duration-200 hover:scale-105">
                         <a href="https://www.youtube.com/watch?v=zaLPtByJEG0" target="_blank" rel="noopener noreferrer" className="absolute inset-0 z-10">
                             <img
                                 src="/latest/latestOriginal.jpg" 
@@ -46,10 +48,10 @@ export default function Home() {
                     </div> */}
 
 
-                    <div className="relative group overflow-hidden w-full h-[250px] rounded-lg border-2 dark:border-[#1b3a4f] border-[#B9E4C9] transition-transform duration-200 hover:scale-105">
+                    <div className="relative group overflow-hidden w-full h-[250px] rounded-lg border-2 dark:border-[#FFA07A] border-[#FFA07A] transition-transform duration-200 hover:scale-105">
                         <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" className="absolute inset-0 z-10">
                             <img
-                                src="/latest/latestRemix.png"
+                                src="/latest/latestRemix.jpg"
                                 alt="latestRemix"
                                 className="object-cover object-top transition-transform duration-1000 group-hover:scale-110 ease-in-out w-full h-full"
                             />
@@ -69,7 +71,7 @@ export default function Home() {
                     <div className="font-thin text-5xl pb-8">
                         <h1>touhou</h1>
                     </div>
-                    <div className="relative group overflow-hidden w-full h-[250px] rounded-lg border-2 dark:border-[#1b3a4f] border-[#B9E4C9] transition-transform duration-200 hover:scale-105">
+                    <div className="relative group overflow-hidden w-full h-[250px] rounded-lg border-2 dark:border-[#FFA07A] border-[#FFA07A] transition-transform duration-200 hover:scale-105">
                         <a href="https://c102-meditations.netlify.app/" target="_blank" rel="noopener noreferrer" className="absolute inset-0 z-10">
                             <img
                                 src="/latest/latestTouhou.jpg"

@@ -77,7 +77,7 @@ export default function About() {
                     </p>
 
                     <h2 className="font-thin text-5xl pt-4 pb-2">
-                        selected tools
+                        tools
                     </h2>
 
                     <div>
@@ -100,7 +100,7 @@ export default function About() {
                 </div>
             </div>
 
-            <div className="grid md:grid-cols-2 pb-4 gap-8 z-10">
+            <div className="grid md:grid-cols-1 pb-4 gap-8 z-10">
                 <div>
                     <h1 className="font-thin text-4xl pt-2 pb-4">
                         {"let's talk! :)"}
@@ -117,21 +117,21 @@ export default function About() {
                 <div>
                     <div className="bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-indigo-200 dark:from-indigo-950 to-transparent rounded-full h-80 w-80 z-0 blur-xl absolute translate-x-1/2 -translate-y-10 " />
 
-                    <form className="flex flex-col relative pt-11" onSubmit={handleSubmit}>
+                    <form className="flex flex-col relative pt-4" onSubmit={handleSubmit}>
                         <label htmlFor="name" typeof="text" className="">
                             Name <span className="text-red-400">*</span>
                         </label>
-                        <input type="text" name="name" id="name" required placeholder="John Doe" className="text-black rounded-md border-indigo-500 dark:bg-gray-800 bg-gray-200 dark:text-gray-200 px-2 py-2" />
+                        <input type="text" name="name" id="name" required placeholder="John Doe" className="text-black rounded-md border-indigo-500 dark:bg-gray-800 bg-gray-200 dark:text-gray-200 px-2 py-2 w-[320px]" />
 
                         <label htmlFor="email" typeof="email" className="pt-4">
                             E-Mail Address <span className="text-red-400">*</span>
                         </label>
-                        <input type="email" name="email" id="email" required placeholder="john.doe@gmail.com" className="text-black rounded-md border-indigo-500 dark:bg-gray-800 bg-gray-200 dark:text-gray-200 px-2 py-2" />
+                        <input type="email" name="email" id="email" required placeholder="john.doe@gmail.com" className="text-black rounded-md border-indigo-500 dark:bg-gray-800 bg-gray-200 dark:text-gray-200 px-2 py-2 w-[320px]" />
 
                         <label htmlFor="subject" typeof="text" className="pt-4">
                             Subject <span className="text-red-400">*</span>
                         </label>
-                        <input type="text" name="subject" id="subject" required placeholder="Subject" className="text-black rounded-md border-indigo-500 dark:bg-gray-800 bg-gray-200 dark:text-gray-200 px-2 py-2" />
+                        <input type="text" name="subject" id="subject" required placeholder="Subject" className="text-black rounded-md border-indigo-500 dark:bg-gray-800 bg-gray-200 dark:text-gray-200 px-2 py-2 w-[320px]" />
 
                         <label htmlFor="message" typeof="email" className="pt-4">
                             Message <span className="text-red-400">*</span>

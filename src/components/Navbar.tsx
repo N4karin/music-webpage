@@ -6,7 +6,7 @@ export default function Navbar() {
     const pathname = location.pathname || '/'; // Get the pathname
 
     return (
-        <Disclosure as="nav" className="w-32 2xl:min-w-64 xl:min-w-64 lg:min-w-64 h-full rounded-l-xl dark:border-gray-700 border-[#B9E4C9] border-r-2">
+        <Disclosure as="nav" className="w-32 2xl:min-w-52 xl:min-w-52 lg:min-w-52 h-full rounded-l-xl dark:border-gray-700 border-[#B9E4C9] border-r-2">
             {() => (
             // {({ open }) => (
                 <div className="flex flex-col h-full overflow-y-auto">
@@ -39,7 +39,7 @@ export default function Navbar() {
                     {/* Social Media Section */}
                     <div className="py-4">
                         <div className="font-bold pb-5 text-center"></div>
-                        <div className="grid grid-cols-2 gap-2 text-left pl-8">
+                        <div className="grid grid-cols-2 gap-4 text-left pl-6">
                             <Link to="https://open.spotify.com/artist/7o1NIFsPdL6tkrvb3uZVqx?si=zse4UKVvTOCxreBuO_p6Bg" className="hover:text-[#FFA07A] transition-all duration-150" target="_blank" rel="noopener noreferrer">
                                 <span className="hidden xl:inline 2xl:inline lg:inline">spotify</span>
                                 <span className="inline xl:hidden 2xl:hidden lg:hidden">sp</span>
