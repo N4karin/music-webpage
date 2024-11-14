@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 
 const YearSection = ({ year, filteredItems, assets, typeColors, isLoading }) => {
     const itemRefs = useRef([]);
+    const yearRef = useRef(null); // Ref for the year element
 
     const extractColor = (bgColor) => {
         const match = bgColor.match(/bg-\[(#\w{6})\]/);
@@ -14,10 +15,18 @@ const YearSection = ({ year, filteredItems, assets, typeColors, isLoading }) => 
 
     useEffect(() => {
         if (!isLoading) {
-            itemRefs.current = itemRefs.current.slice(0, filteredItems.length);
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
+                        // Delay the fade-down effect for the year heading
+                        if (yearRef.current) {
+                            setTimeout(() => {
+                                yearRef.current.classList.remove('invisible');
+                                yearRef.current.classList.add('visible');
+                            }, 100); // Adjust the delay (in milliseconds) as needed
+                        }
+
+                        // Fade in items
                         const delay = entry.target.getAttribute('data-index') * 0.1;
                         entry.target.style.transitionDelay = `${delay}s`;
                         entry.target.classList.remove('invisible');
@@ -33,23 +42,32 @@ const YearSection = ({ year, filteredItems, assets, typeColors, isLoading }) => 
                 threshold: 0,
             });
 
+            // Observe the year element for fade effect
+            if (yearRef.current) {
+                observer.observe(yearRef.current);
+            }
+
+            // Observe each item
             itemRefs.current.forEach((ref) => {
                 if (ref) observer.observe(ref);
             });
 
             return () => {
-                if (itemRefs.current) {
-                    itemRefs.current.forEach((ref) => {
-                        if (ref) observer.unobserve(ref);
-                    });
+                if (yearRef.current) {
+                    observer.unobserve(yearRef.current);
                 }
+                itemRefs.current.forEach((ref) => {
+                    if (ref) observer.unobserve(ref);
+                });
             };
         }
     }, [isLoading, itemRefs.current]);
 
     return (
         <>
-            <h1 className="font-bold text-3xl py-4 px-4">{year}</h1>
+            <div ref={yearRef} className="fade-up invisible"> {/* Use ref and classes */}
+                <h1 className="font-bold text-3xl py-4 px-4">{year}</h1>
+            </div>
             <div className="pl-4">
                 <div>
                     {filteredItems.length === 0 ? (
@@ -70,9 +88,9 @@ const YearSection = ({ year, filteredItems, assets, typeColors, isLoading }) => 
                                                 alt={item.fields.name}
                                                 className={`image-rendering-smooth object-cover transition-transform duration-200 group-hover:scale-[1.05] ease-in-out w-full h-60 rounded-lg mb-4 border-2 shadow-md hover:shadow-lg filter contrast-[90%]`}
                                                 style={{
-                                                    borderColor: extractColor(typeColors[item.fields.type]) || '#FFA07A', // Use inline style for border color
-                                                    borderWidth: '2px', // Ensure border width is set
-                                                    borderStyle: 'solid' // Set border style
+                                                    borderColor: extractColor(typeColors[item.fields.type]) || '#FFA07A',
+                                                    borderWidth: '2px',
+                                                    borderStyle: 'solid'
                                                 }}
                                             />
                                         </a>
@@ -80,7 +98,6 @@ const YearSection = ({ year, filteredItems, assets, typeColors, isLoading }) => 
                                             {item.fields.type}
                                         </span>
 
-                                        {/* Overlay for text information */}
                                         <div className="absolute bottom-0 left-0 w-full flex flex-col justify-end items-start bg-gray-950 bg-opacity-25 backdrop-blur-md border border-white border-opacity-30 opacity-0 transition-opacity duration-200 group-hover:opacity-100 p-2 pt-0 rounded-lg">
                                             <h2 className={`${item.fields.name.length > 13 ? 'text-lg' : 'text-xl'} font-bold text-white`}>
                                                 {item.fields.name}

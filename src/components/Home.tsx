@@ -36,7 +36,7 @@ export default function Home() {
     const itemRefs = useRef([]);
 
     useEffect(() => {
-        AOS.init({ duration: 1500, once: true });
+        AOS.init({ duration: 750, once: true });
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
@@ -63,9 +63,9 @@ export default function Home() {
 
     return (        
         <div className="flex-col pt-20">
-            <div className="font-thin text-3xl pb-8">
+            <div className="font-thin text-5xl pb-16" data-aos="fade-down">
                 <p>hi, my name is nakarin and i make music!</p>
-                <p className="pt-2">here are my latest works:</p>
+                <p className="pt-4">here are my latest works:</p>
             </div>
 
             <div className="grid xl:grid-cols-3 lg:grid-cols-1 2xl:grid-cols-3 justify-evenly md:grid-cols-1 sm:grid-cols-1 gap-4">
