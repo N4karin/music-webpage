@@ -3,18 +3,31 @@ import { useEffect, useRef } from 'react';
 const YearSection = ({ year, filteredItems, assets, typeColors, isLoading }) => {
     const itemRefs = useRef([]);
 
+    console.log(typeColors)
+
+    const borderColors = typeColors
+
     useEffect(() => {
         itemRefs.current = itemRefs.current.slice(0, filteredItems.length);
     }, [filteredItems]);
 
+    const createBorderColorList = (bgColors) => {
+        const borderColors = {};
+        for (const key in bgColors) {
+            // Extract the color value from the background color class
+            const colorValue = bgColors[key].replace('bg-', 'border-');
+            borderColors[key] = colorValue;
+        }
+        return borderColors;
+    };
+
     useEffect(() => {
         if (!isLoading) {
             itemRefs.current = itemRefs.current.slice(0, filteredItems.length);
-            // Create an Intersection Observer
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
-                        const delay = entry.target.getAttribute('data-index') * 0.1; // 
+                        const delay = entry.target.getAttribute('data-index') * 0.1;
                         entry.target.style.transitionDelay = `${delay}s`;
                         entry.target.classList.remove('invisible');
                         entry.target.classList.add('visible');
@@ -28,12 +41,11 @@ const YearSection = ({ year, filteredItems, assets, typeColors, isLoading }) => 
                 rootMargin: '0px 0px',
                 threshold: 0,
             });
-            // Observe each item
+
             itemRefs.current.forEach((ref) => {
                 if (ref) observer.observe(ref);
             });
 
-            // Clean up
             return () => {
                 if (itemRefs.current) {
                     itemRefs.current.forEach((ref) => {
@@ -42,7 +54,7 @@ const YearSection = ({ year, filteredItems, assets, typeColors, isLoading }) => 
                 }
             };
         }
-    }, [isLoading, itemRefs.current]); // Add itemRefs.current as a dependency
+    }, [isLoading, itemRefs.current]);
 
     return (
         <>
@@ -51,7 +63,6 @@ const YearSection = ({ year, filteredItems, assets, typeColors, isLoading }) => 
                 <div>
                     {filteredItems.length === 0 ? (
                         <p>No releases</p>
-
                     ) : (
                         filteredItems.map((item, index) => (
                             <div
@@ -66,10 +77,10 @@ const YearSection = ({ year, filteredItems, assets, typeColors, isLoading }) => 
                                             <img
                                                 src={assets[item.fields.image.sys.id]}
                                                 alt={item.fields.name}
-                                                className="image-rendering-smooth object-cover transition-transform duration-200 group-hover:scale-[1.05] ease-in-out w-full h-60 rounded-lg mb-4 border-2 border-[#FFA07A] shadow-md hover:shadow-lg filter contrast-[90%]"
+                                                className={`image-rendering-smooth object-cover ${createBorderColorList(typeColors)[item.fields.type]} transition-transform duration-200 group-hover:scale-[1.05] ease-in-out w-full h-60 rounded-lg mb-4 border-2 ${typeColors[item.fields.type] || 'border-[#FFA07A]'} shadow-md hover:shadow-lg filter contrast-[90%]`}
                                             />
                                         </a>
-                                        <span className={`absolute top-2 left-2 ${typeColors[item.fields.type] || 'bg-gray-300'} text-black transition-transform duration-200 group-hover:scale-110 ease-in-out text-xs font-bold px-2 py-1 rounded shadow`}>
+                                        <span className={`absolute top-2 left-2 ${borderColors[item.fields.type] || 'bg-gray-300'} text-black transition-transform duration-200 group-hover:scale-110 ease-in-out text-xs font-bold px-2 py-1 rounded shadow`}>
                                             {item.fields.type}
                                         </span>
 

@@ -1,5 +1,41 @@
-export default function Home() {
+import AOS from "aos";
+import "aos/dist/aos.css"; // Import AOS styles
+import { useEffect } from "react";
 
+const columns = [
+    {
+        title: "original",
+        imgSrc: "/latest/latestOriginal.jpg",
+        imgAlt: "latestOriginal",
+        link: "https://www.youtube.com/watch?v=zaLPtByJEG0",
+        description: "空に向かおう feat. KAFU (transl. towards the sky)",
+        date: "march 2024",
+        color: "#6a9bd1"
+    },
+    {
+        title: "remix",
+        imgSrc: "/latest/latestRemix.jpg",
+        imgAlt: "latestRemix",
+        link: "https://www.youtube.com",
+        description: "陽キャJKに憧れる陰キャJKの歌 (original by 音莉飴)",
+        date: "november 2024",
+        color: "#a4d65e"
+    },
+    {
+        title: "touhou",
+        imgSrc: "/latest/latestTouhou.jpg",
+        imgAlt: "latestTouhou",
+        link: "https://c102-meditations.netlify.app/",
+        description: "Meditations (4-Track EP with Kurin T)",
+        date: "august 2023",
+        color: "#FFA07A"
+    }
+];
+
+export default function Home() {
+    useEffect(() => {
+        AOS.init({ duration: 1500, once: true });
+    }, []);
 
     return (        
         <div className="flex-col pt-20">
@@ -9,85 +45,38 @@ export default function Home() {
             </div>
 
             <div className="grid xl:grid-cols-3 lg:grid-cols-1 2xl:grid-cols-3 justify-evenly md:grid-cols-1 sm:grid-cols-1 gap-4">
-                {/* Column for Original */}
-                <div className="flex-col space-y-2">
-                    <div className="font-thin text-5xl pb-8">
-                        <h1>original</h1>
-                    </div>
-                    <div className="relative group overflow-hidden w-full h-[250px] rounded-lg border-2 dark:border-[#FFA07A] border-[#FFA07A] transition-transform duration-200 hover:scale-105">
-                        <a href="https://www.youtube.com/watch?v=zaLPtByJEG0" target="_blank" rel="noopener noreferrer" className="absolute inset-0 z-10">
-                            <img
-                                src="/latest/latestOriginal.jpg" 
-                                alt="latestOriginal"
-                                className="object-cover transition-transform duration-1000 group-hover:scale-110 ease-in-out w-full h-full"
-                            />
-                        </a>
-                        <div className="absolute inset-0" />
-                    </div>
+                {columns.map((column, index) => {
+                    // Construct the border class name here
+                    const borderClass = `border-[${column.color}]`;
 
-                    <div>
-                        <h2 className="font-bold text-3xl pb-2">空に向かおう <span className="font-normal">feat. KAFU </span></h2>
-                        <p className="italic">(transl. towards the sky)</p>
-                        <p className="font-thin pt-4">march 2024</p>
-                    </div>
-                </div>
+                    return (
+                        <div
+                            key={index}
+                            className="flex-col space-y-2"
+                            data-aos="fade-up"
+                            data-aos-delay={index * 400} // Set delay based on index
+                        >
+                            <div className="font-thin text-5xl pb-8">
+                                <h1>{column.title}</h1>
+                            </div>
+                            <div className={`relative group overflow-hidden w-full h-[250px] rounded-lg border-2 ${borderClass} transition-transform duration-200 hover:scale-105`}>
+                                <a href={column.link} target="_blank" rel="noopener noreferrer" className="absolute inset-0 z-10">
+                                    <img
+                                        src={column.imgSrc} 
+                                        alt={column.imgAlt}
+                                        className="object-cover transition-transform duration-1000 group-hover:scale-110 ease-in-out w-full h-full"
+                                    />
+                                </a>
+                                <div className="absolute inset-0" />
+                            </div>
 
-                {/* Column for Remix */}
-                <div className="flex-col space-y-2">
-                    <div className="font-thin text-5xl pb-8">
-                        <h1>remix</h1>
-                    </div>
-
-                    {/* <div className="relative group overflow-hidden w-full h-[200px] rounded-lg border-2 dark:border-[#1b3a4f] border-[#B9E4C9] transition-transform duration-200 hover:scale-105">
-                        <img
-                            src="/latest/latestRemix.png" // Adjust the path as needed
-                            alt="latestRemix"
-                            className=" object-cover transition-transform duration-1000 group-hover:scale-110 ease-in-out w-full h-full"
-                        />
-                        <div className="absolute inset-0" />
-                    </div> */}
-
-
-                    <div className="relative group overflow-hidden w-full h-[250px] rounded-lg border-2 dark:border-[#FFA07A] border-[#FFA07A] transition-transform duration-200 hover:scale-105">
-                        <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" className="absolute inset-0 z-10">
-                            <img
-                                src="/latest/latestRemix.jpg"
-                                alt="latestRemix"
-                                className="object-cover object-top transition-transform duration-1000 group-hover:scale-110 ease-in-out w-full h-full"
-                            />
-                        </a>
-                        <div className="absolute inset-0" />
-                    </div>
-
-                    <div>
-                        <h2 className="font-bold text-3xl pb-2">陽キャJKに憧れる陰キャJKの歌</h2>
-                        <p>original by 音莉飴</p>
-                        <p className="font-thin pt-4">november 2024</p>
-                    </div>
-                </div>
-
-                {/* Column for Touhou */}
-                <div className="flex-col space-y-2">
-                    <div className="font-thin text-5xl pb-8">
-                        <h1>touhou</h1>
-                    </div>
-                    <div className="relative group overflow-hidden w-full h-[250px] rounded-lg border-2 dark:border-[#FFA07A] border-[#FFA07A] transition-transform duration-200 hover:scale-105">
-                        <a href="https://c102-meditations.netlify.app/" target="_blank" rel="noopener noreferrer" className="absolute inset-0 z-10">
-                            <img
-                                src="/latest/latestTouhou.jpg"
-                                alt="latestTouhou"
-                                className="object-cover transition-transform duration-1000 group-hover:scale-110 ease-in-out w-full h-full"
-                            />
-                        </a>
-                        <div className="absolute inset-0" />
-                    </div>
-
-                    <div>
-                        <h2 className="font-bold text-3xl pb-2">Meditations</h2>
-                        <p>4-Track EP with <a href="https://www.youtube.com/@kurint8350" target="_blank" className="text-[#FFA07A]">Kurin T</a></p>
-                        <p className="font-thin pt-4">august 2023</p>
-                    </div>
-                </div>
+                            <div>
+                                <h2 className="font-bold text-3xl pb-2">{column.description}</h2>
+                                <p className="font-thin pt-4">{column.date}</p>
+                            </div>
+                        </div>
+                    );
+                })}
             </div>
         </div>
     );

@@ -7,8 +7,7 @@ import { useEffect, useState } from "react";
 export default function ThemeBtn() {
     const { theme, setTheme } = useTheme();
     const [mounted, setMounted] = useState(false);
-    const [isHovered, setIsHovered] = useState(false); // State for tooltip visibility
-    const [darkMode, setDarkMode] = useState(false);
+    const [isHovered, setIsHovered] = useState(false);
 
     useEffect(() => {
         setMounted(true);
@@ -18,16 +17,12 @@ export default function ThemeBtn() {
         return null;
     }
 
-
     const toggleTheme = () => {
         setTheme(theme === 'light' ? 'dark' : 'light');
-        setDarkMode((prev) => !prev);
-        document.body.classList.toggle('dark', !darkMode);
     };
 
     return (
-        <div className="relative flex p-2  bg-gradient-to-tr from-[#A7C6ED] to-[#B9E4C9] dark:bg-gradient-to-tr dark:from-[#2b1a3c] dark:to-[#1b3a4f] rounded-lg z-10">
-            <h1 className="text-xl"></h1>
+        <div className="relative flex p-2 bg-gradient-to-tr from-[#A7C6ED] to-[#B9E4C9] dark:bg-gradient-to-tr dark:from-[#2b1a3c] dark:to-[#1b3a4f] rounded-lg z-10">
             <div
                 className="relative"
                 onMouseEnter={() => setIsHovered(true)}

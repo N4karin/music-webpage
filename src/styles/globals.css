@@ -3,20 +3,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.fade-enter {
-    opacity: 0;
-}
-.fade-enter-active {
-    opacity: 1;
-    transition: opacity 300ms ease-in;
-}
-.fade-exit {
-    opacity: 1;
-}
-.fade-exit-active {
-    opacity: 0;
-    transition: opacity 300ms ease-in;
-}
 
 .works-grid {
     display: grid;
@@ -26,8 +12,8 @@
 
 .item {
     opacity: 0;
-    transform: translateY(10px);
-    transition: opacity 0.5s, transform 0.25s;
+    transform: translateY(30px);
+    transition: opacity 1s, transform 0.5s;
     transition-delay: 1s;
 }
 
