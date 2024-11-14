@@ -10,7 +10,7 @@ const columns = [
         link: "https://www.youtube.com/watch?v=zaLPtByJEG0",
         description: "空に向かおう feat. KAFU (transl. towards the sky)",
         date: "march 2024",
-        color: "#6a9bd1"
+        color: "#6A9BD1"
     },
     {
         title: "remix",
@@ -19,7 +19,7 @@ const columns = [
         link: "https://www.youtube.com",
         description: "陽キャJKに憧れる陰キャJKの歌 (original by 音莉飴)",
         date: "november 2024",
-        color: "#a4d65e"
+        color: "#A4D65E"
     },
     {
         title: "touhou",
@@ -46,9 +46,6 @@ export default function Home() {
 
             <div className="grid xl:grid-cols-3 lg:grid-cols-1 2xl:grid-cols-3 justify-evenly md:grid-cols-1 sm:grid-cols-1 gap-4">
                 {columns.map((column, index) => {
-                    // Construct the border class name here
-                    const borderClass = `border-[${column.color}]`;
-
                     return (
                         <div
                             key={index}
@@ -59,7 +56,10 @@ export default function Home() {
                             <div className="font-thin text-5xl pb-8">
                                 <h1>{column.title}</h1>
                             </div>
-                            <div className={`relative group overflow-hidden w-full h-[250px] rounded-lg border-2 ${borderClass} transition-transform duration-200 hover:scale-105`}>
+                            <div
+                                className="relative group overflow-hidden w-full h-[250px] rounded-lg border-2 transition-transform duration-200 hover:scale-105"
+                                style={{ borderColor: column.color }} // Use inline style for border color
+                            >
                                 <a href={column.link} target="_blank" rel="noopener noreferrer" className="absolute inset-0 z-10">
                                     <img
                                         src={column.imgSrc} 

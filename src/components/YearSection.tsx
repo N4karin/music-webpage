@@ -3,23 +3,14 @@ import { useEffect, useRef } from 'react';
 const YearSection = ({ year, filteredItems, assets, typeColors, isLoading }) => {
     const itemRefs = useRef([]);
 
-    console.log(typeColors)
-
-    const borderColors = typeColors
+    const extractColor = (bgColor) => {
+        const match = bgColor.match(/bg-\[(#\w{6})\]/);
+        return match ? match[1] : null; // Return the hex color or null if not found
+    };
 
     useEffect(() => {
         itemRefs.current = itemRefs.current.slice(0, filteredItems.length);
     }, [filteredItems]);
-
-    const createBorderColorList = (bgColors) => {
-        const borderColors = {};
-        for (const key in bgColors) {
-            // Extract the color value from the background color class
-            const colorValue = bgColors[key].replace('bg-', 'border-');
-            borderColors[key] = colorValue;
-        }
-        return borderColors;
-    };
 
     useEffect(() => {
         if (!isLoading) {
@@ -77,10 +68,15 @@ const YearSection = ({ year, filteredItems, assets, typeColors, isLoading }) => 
                                             <img
                                                 src={assets[item.fields.image.sys.id]}
                                                 alt={item.fields.name}
-                                                className={`image-rendering-smooth object-cover ${createBorderColorList(typeColors)[item.fields.type]} transition-transform duration-200 group-hover:scale-[1.05] ease-in-out w-full h-60 rounded-lg mb-4 border-2 ${typeColors[item.fields.type] || 'border-[#FFA07A]'} shadow-md hover:shadow-lg filter contrast-[90%]`}
+                                                className={`image-rendering-smooth object-cover transition-transform duration-200 group-hover:scale-[1.05] ease-in-out w-full h-60 rounded-lg mb-4 border-2 shadow-md hover:shadow-lg filter contrast-[90%]`}
+                                                style={{
+                                                    borderColor: extractColor(typeColors[item.fields.type]) || '#FFA07A', // Use inline style for border color
+                                                    borderWidth: '2px', // Ensure border width is set
+                                                    borderStyle: 'solid' // Set border style
+                                                }}
                                             />
                                         </a>
-                                        <span className={`absolute top-2 left-2 ${borderColors[item.fields.type] || 'bg-gray-300'} text-black transition-transform duration-200 group-hover:scale-110 ease-in-out text-xs font-bold px-2 py-1 rounded shadow`}>
+                                        <span className={`absolute top-2 left-2 ${typeColors[item.fields.type] || 'bg-gray-300'} text-black transition-transform duration-200 group-hover:scale-110 ease-in-out text-xs font-bold px-2 py-1 rounded shadow`}>
                                             {item.fields.type}
                                         </span>
 
