@@ -1,6 +1,6 @@
 import AOS from "aos";
 import "aos/dist/aos.css"; // Import AOS styles
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 const columns = [
     {
@@ -33,8 +33,32 @@ const columns = [
 ];
 
 export default function Home() {
+    const itemRefs = useRef([]);
+
     useEffect(() => {
         AOS.init({ duration: 1500, once: true });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                } else {
+                    entry.target.classList.remove('visible');
+                }
+            });
+        }, {
+            threshold: 0 // Trigger when any part of the element is visible
+        });
+
+        itemRefs.current.forEach((ref) => {
+            if (ref) observer.observe(ref);
+        });
+
+        return () => {
+            itemRefs.current.forEach((ref) => {
+                if (ref) observer.unobserve(ref);
+            });
+        };
     }, []);
 
     return (        
@@ -49,9 +73,10 @@ export default function Home() {
                     return (
                         <div
                             key={index}
-                            className="flex-col space-y-2"
+                            ref={(el) => (itemRefs.current[index] = el)}
+                            className="flex-col space-y-2 item" // Added 'item' class here
                             data-aos="fade-up"
-                            data-aos-delay={index * 400} // Set delay based on index
+                            data-aos-delay={index * 200} // Set delay based on index
                         >
                             <div className="font-thin text-5xl pb-8">
                                 <h1>{column.title}</h1>
