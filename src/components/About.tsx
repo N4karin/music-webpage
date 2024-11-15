@@ -1,10 +1,11 @@
 "use client";
 import { Button } from "@headlessui/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import AOS from "aos"; // Import AOS
+import "aos/dist/aos.css"; // Import AOS styles
 
 export default function About() {
-
-    const [emailSubmitted, setEmailSubmitted] = useState(false)
+    const [emailSubmitted, setEmailSubmitted] = useState(false);
 
     const data = [
         { left: 'Software', right: 'Ableton Live, After Effects, Davinci Resolve' },
@@ -15,15 +16,15 @@ export default function About() {
         { left: 'Samples', right: 'Splice, Break Packs (Think/Amen)' },
     ];
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const data = {
-            email: (e.target as HTMLFormElement).email.value,
-            subject: (e.target as HTMLFormElement).subject.value,
-            message: (e.target as HTMLFormElement).message.value,
-        }
+        const formData = {
+            email: e.target.email.value,
+            subject: e.target.subject.value,
+            message: e.target.message.value,
+        };
 
-        const JSONdata = JSON.stringify(data);
+        const JSONdata = JSON.stringify(formData);
         const endpoint = "/api/send";
 
         const options = {
@@ -34,38 +35,28 @@ export default function About() {
             body: JSONdata,
         };
 
-        console.log("body here is ", JSONdata)
-
         try {
             const response = await fetch(endpoint, options);
-
-            if (!response.ok) {
-                throw new Error(`Error: ${response.status}`);
-            }
-
+            if (!response.ok) throw new Error(`Error: ${response.status}`);
             const resData = await response.json();
-            console.log('Response data:', resData);
-
             if (response.status === 200) {
-                console.log('Message sent successfully.', resData);
                 setEmailSubmitted(true);
             } else {
-                console.error('Error:', resData.error);
                 alert('Something went wrong, please try again.');
             }
         } catch (error) {
-            console.error('Network error:', error);
             alert('Failed to send message. Please check your network connection.');
         }
-
     };
+
+    useEffect(() => {
+        AOS.init({ duration: 750, once: true });
+    }, []);
 
     return (
         <div className="grid grid-cols-1 justify-between pt-6 gap-4 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2">
-            <div className="flex flex-col">
-                <h1 className="font-thin text-5xl pb-4">
-                    about
-                </h1>
+            <div className="flex flex-col" data-aos="fade-up" data-aos-delay="100">
+                <h1 className="font-thin text-5xl pb-4">about</h1>
 
                 <div>
                     <p>
@@ -76,15 +67,12 @@ export default function About() {
                         Art transcends us and allows us to express things we couldn't otherwise, that's why it's important to nurture and feed your creative soul and allow yourself to be vulnerable. In any case, I am happy you found your way here and hope you enjoy your stay~
                     </p>
 
-                    <h2 className="font-thin text-5xl pt-4 pb-2">
-                        tools
-                    </h2>
+                    <h2 className="font-thin text-5xl pt-4 pb-2">tools</h2>
 
                     <div>
                         <table className="min-w-full">
                             <thead>
-                                <tr>
-                                </tr>
+                                <tr></tr>
                             </thead>
                             <tbody>
                                 {data.map((item, index) => (
@@ -96,15 +84,12 @@ export default function About() {
                             </tbody>
                         </table>
                     </div>
-
                 </div>
             </div>
 
             <div className="grid md:grid-cols-1 pb-4 gap-8 z-10">
-                <div>
-                    <h1 className="font-thin text-4xl pt-2 pb-4">
-                        {"let's talk! :)"}
-                    </h1>
+                <div data-aos="fade-up" data-aos-delay="300">
+                    <h1 className="font-thin text-4xl pt-2 pb-4">{"let's talk! :)"}</h1>
 
                     <p className="prose dark:prose-invert text-justify">
                         I am open for working together with like-minded creatives, be it with illustrators, vocalists, doing remixes and the likes! Don't hesitate to contact me - messages through this form will get directly to me.
@@ -114,50 +99,33 @@ export default function About() {
                     </p>
                 </div>
 
-                <div>
-                    <div className="bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-indigo-200 dark:from-indigo-950 to-transparent rounded-full h-80 w-80 z-0 blur-xl absolute translate-x-1/2 -translate-y-10 " />
+                <div data-aos="fade-up" data-aos-delay="500">
+                    <div className="bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-indigo-200 dark:from-indigo-950 to-transparent rounded-full h-80 w-80 z-0 blur-xl absolute translate-x-1/2 -translate-y-10" />
 
                     <form className="flex flex-col relative pt-4" onSubmit={handleSubmit}>
-                        <label htmlFor="name" typeof="text" className="">
-                            Name <span className="text-red-400">*</span>
-                        </label>
+                        <label htmlFor="name">Name <span className="text-red-400">*</span></label>
                         <input type="text" name="name" id="name" required placeholder="John Doe" className="text-black rounded-md border-indigo-500 dark:bg-gray-800 bg-gray-200 dark:text-gray-200 px-2 py-2 w-[320px]" />
 
-                        <label htmlFor="email" typeof="email" className="pt-4">
-                            E-Mail Address <span className="text-red-400">*</span>
-                        </label>
+                        <label htmlFor="email" className="pt-4">E-Mail Address <span className="text-red-400">*</span></label>
                         <input type="email" name="email" id="email" required placeholder="john.doe@gmail.com" className="text-black rounded-md border-indigo-500 dark:bg-gray-800 bg-gray-200 dark:text-gray-200 px-2 py-2 w-[320px]" />
 
-                        <label htmlFor="subject" typeof="text" className="pt-4">
-                            Subject <span className="text-red-400">*</span>
-                        </label>
+                        <label htmlFor="subject" className="pt-4">Subject <span className="text-red-400">*</span></label>
                         <input type="text" name="subject" id="subject" required placeholder="Subject" className="text-black rounded-md border-indigo-500 dark:bg-gray-800 bg-gray-200 dark:text-gray-200 px-2 py-2 w-[320px]" />
 
-                        <label htmlFor="message" typeof="email" className="pt-4">
-                            Message <span className="text-red-400">*</span>
-                        </label>
-                        <textarea name="message" id="message" className="text-sm px-2 py-2 h-32 text-black rounded-md border-indigo-500 dark:bg-gray-800 bg-gray-200 dark:text-gray-200" placeholder="Let's talk about...">
-
-                        </textarea>
+                        <label htmlFor="message" className="pt-4">Message <span className="text-red-400">*</span></label>
+                        <textarea name="message" id="message" className="text-sm px-2 py-2 h-32 text-black rounded-md border-indigo-500 dark:bg-gray-800 bg-gray-200 dark:text-gray-200" placeholder="Let's talk about..."></textarea>
 
                         <div className="pt-4">
-
                             <Button className="group text-gray-200 w-fit px-6 py-3 my-2 flex items-center rounded-md bg-gradient-to-r from-blue-700 to-indigo-500 cursor-pointer" type="submit">
                                 Send Message
                             </Button>
-                            {
-                                emailSubmitted && (
-                                    <p className="text-green-600">
-                                        Email sent successfully!
-                                    </p>
-                                )
-                            }
+                            {emailSubmitted && (
+                                <p className="text-green-600">Email sent successfully!</p>
+                            )}
                         </div>
-
                     </form>
                 </div>
             </div>
         </div>
-    )
+    );
 }
-

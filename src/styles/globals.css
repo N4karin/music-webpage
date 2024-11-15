@@ -13,12 +13,21 @@
 .item {
     opacity: 0;
     transform: translateY(30px);
-    transition: opacity 0.5s ease, transform 1s ease;
+    transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 .item.visible {
     opacity: 1;
     transform: translateY(0);
+}
+
+.invisible {
+    opacity: 0;
+    transition: opacity 0.6s ease-in-out;
+}
+
+.visible {
+    opacity: 1;
 }
 
 .image-rendering-smooth {

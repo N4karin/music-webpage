@@ -65,7 +65,7 @@ const YearSection = ({ year, filteredItems, assets, typeColors, isLoading }) => 
 
     return (
         <>
-            <div ref={yearRef} className="fade-up invisible"> {/* Use ref and classes */}
+            <div ref={yearRef} className="fade-up">{/* Use ref and classes */}
                 <h1 className="font-bold text-3xl py-4 px-4">{year}</h1>
             </div>
             <div className="pl-4">

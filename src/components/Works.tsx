@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import client from './contentfulClient';
 import YearSection from './YearSection';
 import Spinner from './Spinner'; // Import the Spinner component
+import AOS from "aos";
+import "aos/dist/aos.css"; // Import AOS styles
 
 const Works = () => {
     const [items, setItems] = useState([]);
@@ -41,6 +43,10 @@ const Works = () => {
             });
     }, []);
 
+    useEffect(() => {
+        AOS.init({ duration: 750, once: true });
+    }, []);
+
     const filterItemsByYear = (items, year) => {
         return items.filter(item => {
             const createDate = item.fields.createDate ? new Date(item.fields.createDate) : null;
@@ -66,14 +72,17 @@ const Works = () => {
     }
 
     return (
-        <div className="works-grid">
-            {filteredItemsByYear
-                .filter(({ filteredItems }) => filteredItems.length > 0) // Filter out years with no items
-                .map(({ year, filteredItems }) => (
-                    <div key={year} className="year-section">
-                        <YearSection year={year} filteredItems={filteredItems} assets={assets} typeColors={typeColors} isLoading={loading} />
-                    </div>
-                ))}
+        <div>
+            <div className="font-thin text-5xl p-4" data-aos="fade-down">works</div>
+            <div className="works-grid" data-aos="fade-up">
+                {filteredItemsByYear
+                    .filter(({ filteredItems }) => filteredItems.length > 0) // Filter out years with no items
+                    .map(({ year, filteredItems }) => (
+                        <div key={year} className="year-section">
+                            <YearSection year={year} filteredItems={filteredItems} assets={assets} typeColors={typeColors} isLoading={loading} />
+                        </div>
+                    ))}
+            </div>
         </div>
     );
 };
