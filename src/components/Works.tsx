@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import client from './contentfulClient';
 import YearSection from './YearSection';
 import Spinner from './Spinner'; // Import the Spinner component
-import AOS from "aos";
+import AOS from 'aos';
 import "aos/dist/aos.css"; // Import AOS styles
 
 const Works = () => {

@@ -8,6 +8,7 @@ export default function ThemeBtn() {
     const { theme, setTheme } = useTheme();
     const [mounted, setMounted] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
+    const [isPushing, setIsPushing] = useState(false); // State for pushing effect
 
     useEffect(() => {
         setMounted(true);
@@ -18,7 +19,13 @@ export default function ThemeBtn() {
     }
 
     const toggleTheme = () => {
+        setIsPushing(true); // Trigger pushing effect
         setTheme(theme === 'light' ? 'dark' : 'light');
+
+        // Reset pushing state after animation duration
+        setTimeout(() => {
+            setIsPushing(false);
+        }, 300); // Match this duration with your CSS duration
     };
 
     return (
@@ -30,9 +37,11 @@ export default function ThemeBtn() {
             >
                 <Button
                     onClick={toggleTheme}
-                    className="dark:bg-[#315f7e] bg-[#B9E4C9] px-4 rounded-lg font-semibold text-lg"
+                    className="dark:bg-[#315f7e] bg-[#B9E4C9] px-4 rounded-lg font-light text-lg"
                 >
-                    {theme === 'light' ? 'ひる' : 'よる'}
+                    <span className={`transition-transform duration-300 ${isPushing ? 'translate-y-2' : 'translate-y-0'}`}>
+                        {theme === 'light' ? 'ひる' : 'よる'}
+                    </span>
                 </Button>
                 {isHovered && (
                     <div className="absolute top-full left-1/2 transform mt-3 -translate-x-1/2 mb-2 bg-gray-700 text-white text-sm rounded py-1 px-2">

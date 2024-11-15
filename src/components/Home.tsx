@@ -36,7 +36,7 @@ export default function Home() {
     const itemRefs = useRef([]);
 
     useEffect(() => {
-        AOS.init({ duration: 750, once: true });
+        AOS.init({ duration: 500, once: true });
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
@@ -82,7 +82,7 @@ export default function Home() {
                                 <h1>{column.title}</h1>
                             </div>
                             <div
-                                className="relative group overflow-hidden w-full h-[250px] rounded-lg border-2 transition-transform duration-200 hover:scale-105"
+                                className="relative group overflow-hidden w-full h-[250px] rounded-lg border-2 transition-transform duration-200 hover:scale-[1.03]"
                                 style={{ borderColor: column.color }} // Use inline style for border color
                             >
                                 <a href={column.link} target="_blank" rel="noopener noreferrer" className="absolute inset-0 z-10">

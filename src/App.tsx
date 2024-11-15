@@ -1,10 +1,11 @@
 import { Routes, Route } from 'react-router-dom';
+import { useTheme } from './components/ThemeContext';
 import Home from './components/Home';
 import About from './components/About';
-import Works from './components/Works';
-import { useTheme } from './components/ThemeContext';
-import Navbar from './components/Navbar';
 import './styles/globals.css'; // Make sure this imports the Google Font
+import Works from './components/Works';
+import Blog from './components/Blog';
+import Navbar from './components/Navbar';
 import ThemeBtn from './components/ThemeBtn';
 
 const App: React.FC = () => {
@@ -25,6 +26,7 @@ const App: React.FC = () => {
               <Route path="/home" element={<Home />} />
               <Route path="/about" element={<About />} />
               <Route path="/works" element={<Works />} />
+              <Route path="/blog" element={<Blog />} />
             </Routes>
           </div>
         </div>

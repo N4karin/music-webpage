@@ -39,7 +39,7 @@ const YearSection = ({ year, filteredItems, assets, typeColors, isLoading }) => 
                 });
             }, {
                 rootMargin: '0px 0px',
-                threshold: 0.2,
+                threshold: 0,
             });
 
             // Observe the year element for fade effect
