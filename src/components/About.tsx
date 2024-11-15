@@ -1,8 +1,8 @@
 "use client";
 import { Button } from "@headlessui/react";
 import { useState, useEffect } from "react";
-import AOS from "aos"; // Import AOS
-import "aos/dist/aos.css"; // Import AOS styles
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 export default function About() {
     const [emailSubmitted, setEmailSubmitted] = useState(false);
@@ -67,7 +67,7 @@ export default function About() {
                         Art transcends us and allows us to express things we couldn't otherwise, that's why it's important to nurture and feed your creative soul and allow yourself to be vulnerable. In any case, I am happy you found your way here and hope you enjoy your stay~
                     </p>
 
-                    <h2 className="font-thin text-5xl pt-4 pb-2">tools</h2>
+                    <h2 className="font-thin text-5xl pt-4 pb-2" data-aos="fade-up" data-aos-delay="150">tools</h2>
 
                     <div>
                         <table className="min-w-full">
@@ -76,7 +76,7 @@ export default function About() {
                             </thead>
                             <tbody>
                                 {data.map((item, index) => (
-                                    <tr key={index}>
+                                    <tr key={index} data-aos="fade-up" data-aos-delay={200 + index * 50}>
                                         <td className="text-right p-2">{item.left}</td>
                                         <td className="text-left p-2">{item.right}</td>
                                     </tr>

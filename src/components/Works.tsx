@@ -73,7 +73,7 @@ const Works = () => {
 
     return (
         <div>
-            <div className="font-thin text-5xl p-4" data-aos="fade-down">works</div>
+            <div className="font-thin text-5xl p-4" data-aos="fade-right">works</div>
             <div className="works-grid" data-aos="fade-up">
                 {filteredItemsByYear
                     .filter(({ filteredItems }) => filteredItems.length > 0) // Filter out years with no items

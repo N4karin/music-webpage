@@ -39,7 +39,7 @@ const YearSection = ({ year, filteredItems, assets, typeColors, isLoading }) => 
                 });
             }, {
                 rootMargin: '0px 0px',
-                threshold: 0,
+                threshold: 0.2,
             });
 
             // Observe the year element for fade effect
@@ -99,7 +99,7 @@ const YearSection = ({ year, filteredItems, assets, typeColors, isLoading }) => 
                                         </span>
 
                                         <div className="absolute bottom-0 left-0 w-full flex flex-col justify-end items-start bg-gray-950 bg-opacity-25 backdrop-blur-md border border-white border-opacity-30 opacity-0 transition-opacity duration-200 group-hover:opacity-100 p-2 pt-0 rounded-lg">
-                                            <h2 className={`${item.fields.name.length > 13 ? 'text-lg' : 'text-xl'} font-bold text-white`}>
+                                            <h2 className={`${item.fields.name.length > 13 ? 'text-md' : 'text-lg'} font-bold text-white`}>
                                                 {item.fields.name}
                                             </h2>
                                             <div className="flex items-center space-x-1">
