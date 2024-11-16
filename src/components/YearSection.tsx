@@ -63,6 +63,11 @@ const YearSection = ({ year, filteredItems, assets, typeColors, isLoading }) => 
         }
     }, [isLoading, itemRefs.current]);
 
+    // Sort filteredItems by createDate in descending order
+    const sortedItems = [...filteredItems].sort((a, b) => {
+        return new Date(b.fields.createDate) - new Date(a.fields.createDate);
+    });
+
     return (
         <>
             <div ref={yearRef} className="fade-up">{/* Use ref and classes */}
@@ -70,10 +75,10 @@ const YearSection = ({ year, filteredItems, assets, typeColors, isLoading }) => 
             </div>
             <div className="pl-4">
                 <div>
-                    {filteredItems.length === 0 ? (
+                    {sortedItems.length === 0 ? (
                         <p>No releases</p>
                     ) : (
-                        filteredItems.map((item, index) => (
+                        sortedItems.map((item, index) => (
                             <div
                                 ref={(el) => (itemRefs.current[index] = el)}
                                 className="item invisible group"

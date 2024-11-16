@@ -94,8 +94,9 @@ export default function About() {
                         <p className="pt-4">
                             Art transcends us and allows us to express things we couldn't otherwise, that's why it's important to nurture and feed your creative soul and allow yourself to be vulnerable. In any case, I am happy you found your way here and hope you enjoy your stay~
                         </p>
-                        <h2 className="font-thin text-5xl pt-4 pb-2 fade-in" data-index={1}>tools</h2>
+                        <h2 className="font-thin text-5xl pb-2 fade-in" data-index={1}>tools</h2>
                         <div>
+                        <h1 className="font-thin text-5xl pb-4">tools</h1>
                             <table className="min-w-full">
                                 <thead>
                                     <tr></tr>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import client from './contentfulClient';
-import Spinner from './Spinner'; // Import the Spinner component
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import Spinner from './Spinner';
+import { Link } from 'react-router-dom';
 
 export default function Blog() {
     const [items, setItems] = useState([]);
@@ -17,34 +17,28 @@ export default function Blog() {
     };
 
     useEffect(() => {
-        client.getEntries({ content_type: 'blogPost' })
-            .then((response) => {
-                console.log("Fetched entries:", response);
+        const fetchEntries = async () => {
+            try {
+                const response = await client.getEntries({ content_type: 'blogPost' });
                 setItems(response.items);
+
                 const assetIds = response.items.map(item => item.fields.image?.sys.id).filter(Boolean);
                 if (assetIds.length > 0) {
-                    client.getAssets({ 'sys.id[in]': assetIds.join(',') })
-                        .then(assetResponse => {
-                            const assetMap = {};
-                            assetResponse.items.forEach(asset => {
-                                assetMap[asset.sys.id] = asset.fields.file.url;
-                            });
-                            setAssets(assetMap);
-                        })
-                        .catch(error => {
-                            console.error("Error fetching assets:", error);
-                        })
-                        .finally(() => {
-                            setLoading(false);
-                        });
-                } else {
-                    setLoading(false);
+                    const assetResponse = await client.getAssets({ 'sys.id[in]': assetIds.join(',') });
+                    const assetMap = {};
+                    assetResponse.items.forEach(asset => {
+                        assetMap[asset.sys.id] = asset.fields.file.url;
+                    });
+                    setAssets(assetMap);
                 }
-            })
-            .catch((error) => {
-                console.error("Error fetching entries:", error);
+            } catch (error) {
+                console.error("Error fetching entries or assets:", error);
+            } finally {
                 setLoading(false);
-            });
+            }
+        };
+
+        fetchEntries();
     }, []);
 
     useEffect(() => {
@@ -63,25 +57,20 @@ export default function Blog() {
                 }
             });
         }, {
-            threshold: 0.1
+            threshold: 0
         });
 
-        const timeoutId = setTimeout(() => {
-            itemRefs.current.forEach((ref) => {
-                if (ref) observer.observe(ref);
-            });
-        }, 100);
+        itemRefs.current.forEach((ref) => {
+            if (ref) observer.observe(ref);
+        });
 
         return () => {
-            clearTimeout(timeoutId);
-            itemRefs.current.forEach((ref) => {
-                if (ref) observer.unobserve(ref);
-            });
+            observer.disconnect();
         };
     }, [items]);
 
     if (loading) {
-        return <Spinner />;
+        return (<Spinner />);
     }
 
     return (
@@ -90,12 +79,11 @@ export default function Blog() {
             {items.map((item, index) => (
                 <Link
                     key={item.sys.id}
-                    to={`/blog/${item.fields.slug}`} // Adjust this path based on your routing setup
+                    to={`/blog/${item.fields.slug}`}
                     ref={(el) => (itemRefs.current[index] = el)}
                     data-index={index}
-                    className={`grid grid-cols-1 md:grid-cols-2 border-2 border-[#6A9BD1] rounded-3xl overflow-hidden gap-4 fade-in ${visibleItems[index] ? 'visible' : ''} transition-transform duration-50 hover:scale-[1.01]`}
+                    className={`grid grid-cols-1 md:grid-cols-2 border-[#6A9BD1] rounded-3xl overflow-hidden gap-4  transition-transform duration-50 hover:scale-[1.01]`}
                 >
-
                     <div className="relative flex justify-center" style={{ height: '200px' }}>
                         {item.fields.image && (
                             <img

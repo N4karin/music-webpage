@@ -7,6 +7,7 @@ import Works from './components/Works';
 import Blog from './components/Blog';
 import Navbar from './components/Navbar';
 import ThemeBtn from './components/ThemeBtn';
+import BlogPost from './components/BlogPost';
 
 const App: React.FC = () => {
 
@@ -27,6 +28,7 @@ const App: React.FC = () => {
               <Route path="/about" element={<About />} />
               <Route path="/works" element={<Works />} />
               <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:slug" element={<BlogPost />} />
             </Routes>
           </div>
         </div>

@@ -12,7 +12,7 @@ const Works = () => {
 
     useEffect(() => {
         // Fetch entries
-        client.getEntries({ content_type: 'musicWork' })
+        client.getEntries({ content_type: 'musicWork', order: 'fields.createDate' })
             .then((response) => {
                 console.log("Fetched entries:", response);
                 setItems(response.items);
