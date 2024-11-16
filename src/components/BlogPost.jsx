@@ -4,7 +4,7 @@ import client from './contentfulClient';
 import Spinner from './Spinner';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 
-const BlogPost = () => {
+export default function BlogPost() {
     const { slug } = useParams();
     const navigate = useNavigate();
     const [post, setPost] = useState(null);
@@ -77,5 +77,3 @@ const BlogPost = () => {
         </div>
     );
 };
-
-export default BlogPost;

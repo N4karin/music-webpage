@@ -5,9 +5,9 @@ import About from './components/About';
 import './styles/globals.css'; // Make sure this imports the Google Font
 import Works from './components/Works';
 import Blog from './components/Blog';
+import BlogPost from './components/BlogPost';
 import Navbar from './components/Navbar';
 import ThemeBtn from './components/ThemeBtn';
-import BlogPost from './components/BlogPost';
 
 const App: React.FC = () => {
 
