@@ -1,10 +1,34 @@
 import { useEffect, useRef } from 'react';
 
-const YearSection = ({ year, filteredItems, assets, typeColors, isLoading }) => {
-    const itemRefs = useRef([]);
-    const yearRef = useRef(null); // Ref for the year element
+interface YearSectionProps {
+    year: number;
+    filteredItems: Array<{
+        id: string;
+        fields: {
+            createDate: string;
+            image?: {
+                sys: {
+                    id: string;
+                };
+            };
+            name: string;
+            description: string;
+            type: string;
+            url: string;
+            collaborators?: string;
+            collaboratorLink?: string;
+        };
+    }>;
+    assets: Record<string, string>;
+    typeColors: Record<string, string>;
+    isLoading: boolean;
+}
 
-    const extractColor = (bgColor) => {
+const YearSection: React.FC<YearSectionProps> = ({ year, filteredItems, assets, typeColors, isLoading }) => {
+    const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+    const yearRef = useRef<HTMLDivElement | null>(null); // Ref for the year element
+
+    const extractColor = (bgColor: string) => {
         const match = bgColor.match(/bg-\[(#\w{6})\]/);
         return match ? match[1] : null; // Return the hex color or null if not found
     };
@@ -21,37 +45,42 @@ const YearSection = ({ year, filteredItems, assets, typeColors, isLoading }) => 
                         // Delay the fade-down effect for the year heading
                         if (yearRef.current) {
                             setTimeout(() => {
-                                yearRef.current.classList.remove('invisible');
-                                yearRef.current.classList.add('visible');
+                                yearRef.current?.classList.remove('invisible');
+                                yearRef.current?.classList.add('visible');
                             }, 100); // Adjust the delay (in milliseconds) as needed
                         }
-
+    
                         // Fade in items
-                        const delay = entry.target.getAttribute('data-index') * 0.1;
-                        entry.target.style.transitionDelay = `${delay}s`;
-                        entry.target.classList.remove('invisible');
-                        entry.target.classList.add('visible');
+                        const indexAttr = entry.target.getAttribute('data-index');
+                        const delay = (indexAttr !== null ? Number(indexAttr) : 0) * 0.1;
+                        
+                        // Assert entry.target as HTMLElement
+                        const targetElement = entry.target as HTMLElement;
+                        targetElement.style.transitionDelay = `${delay}s`;
+                        targetElement.classList.remove('invisible');
+                        targetElement.classList.add('visible');
                     } else {
-                        entry.target.style.transitionDelay = '0s';
-                        entry.target.classList.remove('visible');
-                        entry.target.classList.add('invisible');
+                        const targetElement = entry.target as HTMLElement;
+                        targetElement.style.transitionDelay = '0s';
+                        targetElement.classList.remove('visible');
+                        targetElement.classList.add('invisible');
                     }
                 });
             }, {
                 rootMargin: '0px 0px',
                 threshold: 0,
             });
-
+    
             // Observe the year element for fade effect
             if (yearRef.current) {
                 observer.observe(yearRef.current);
             }
-
+    
             // Observe each item
             itemRefs.current.forEach((ref) => {
                 if (ref) observer.observe(ref);
             });
-
+    
             return () => {
                 if (yearRef.current) {
                     observer.unobserve(yearRef.current);
@@ -61,16 +90,16 @@ const YearSection = ({ year, filteredItems, assets, typeColors, isLoading }) => 
                 });
             };
         }
-    }, [isLoading, itemRefs.current]);
+    }, [isLoading]);
 
     // Sort filteredItems by createDate in descending order
     const sortedItems = [...filteredItems].sort((a, b) => {
-        return new Date(b.fields.createDate) - new Date(a.fields.createDate);
+        return new Date(b.fields.createDate).getTime() - new Date(a.fields.createDate).getTime();
     });
 
     return (
         <>
-            <div ref={yearRef} className="fade-up">{/* Use ref and classes */}
+            <div ref={yearRef} className="fade-up">
                 <h1 className="font-bold text-3xl py-4 px-4">{year}</h1>
             </div>
             <div className="pl-4">
@@ -87,7 +116,7 @@ const YearSection = ({ year, filteredItems, assets, typeColors, isLoading }) => 
                             >
                                 {item.fields.image && assets[item.fields.image.sys.id] && (
                                     <div className="relative">
-                                        <a href={item.fields.url} target='_blank' rel="noopener noreferrer">
+                                        <a href={item.fields.url} target="_blank" rel="noopener noreferrer">
                                             <img
                                                 src={assets[item.fields.image.sys.id]}
                                                 alt={item.fields.name}
@@ -111,7 +140,7 @@ const YearSection = ({ year, filteredItems, assets, typeColors, isLoading }) => 
                                                 <p className="text-white">{item.fields.description}</p>
                                                 {item.fields.collaborators && (
                                                     <span className="text-white">
-                                                        {' '}with <a href={item.fields.collaboratorLink} target='_blank' className="text-[#FFA07A]">{item.fields.collaborators}</a>
+                                                        {' '}with <a href={item.fields.collaboratorLink} target="_blank" className="text-[#FFA07A]">{item.fields.collaborators}</a>
                                                     </span>
                                                 )}
                                             </div>

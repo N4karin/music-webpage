@@ -1,17 +1,67 @@
-import React, { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import client from './contentfulClient';
 import Spinner from './Spinner';
 import { Link } from 'react-router-dom';
+import { Entry } from 'contentful';
+
+// Define the structure of your entry
+interface BlogPost {
+    slug: string; // Changed from any to string
+    title: string | undefined;
+    summary: string;
+    date: string; // Changed from a function to a string
+    image?: { // Made image optional
+        sys: {
+            id: string;
+        };
+    };
+    sys: {
+        id: string;
+    };
+    fields: {
+        title: string;
+        summary: string;
+        date: string;
+        slug: string;
+        image?: { // Made image optional
+            sys: {
+                id: string;
+            };
+        };
+    };
+}
+
+// Define a more generic type for Contentful entries
+type ContentfulEntry<T> = {
+    sys: {
+        id: string;
+    };
+    fields: T;
+};
+
+// Type guard to check if an entry is a BlogPost
+const isBlogPost = (entry: any): entry is ContentfulEntry<BlogPost> => {
+    return entry && entry.fields && typeof entry.fields.title === 'string' &&
+        typeof entry.fields.summary === 'string' &&
+        typeof entry.fields.date === 'string' &&
+        typeof entry.fields.slug === 'string' &&
+        (entry.fields.image === undefined || (entry.fields.image.sys && typeof entry.fields.image.sys.id === 'string'));
+};
 
 export default function Blog() {
-    const [items, setItems] = useState([]);
-    const [assets, setAssets] = useState({});
+    const [items, setItems] = useState<ContentfulEntry<BlogPost>[]>([]);
+    const [assets, setAssets] = useState<{ [key: string]: string }>({});
     const [loading, setLoading] = useState(true);
-    const [visibleItems, setVisibleItems] = useState([]);
-    const itemRefs = useRef([]);
+    const [, setVisibleItems] = useState<boolean[]>([]);
+    const itemRefs = useRef<(HTMLAnchorElement | null)[]>([]);
 
-    const formatDate = (dateString) => {
-        const options = { day: '2-digit', month: 'short', year: 'numeric' };
+
+    const formatDate = (dateString: string) => {
+        const options: Intl.DateTimeFormatOptions = {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric'
+        };
         const date = new Date(dateString);
         return date.toLocaleDateString('en-US', options).replace(/(\d{1,2}) (\w{3}) (\d{4})/, '$1 $2 $3');
     };
@@ -19,15 +69,25 @@ export default function Blog() {
     useEffect(() => {
         const fetchEntries = async () => {
             try {
-                const response = await client.getEntries({ content_type: 'blogPost' });
-                setItems(response.items);
+                const response = await client.getEntries({ content_type: 'blogPost' }) as { items: Entry<any>[] }; // Explicitly type the response
+                const blogPosts = response.items.filter(isBlogPost) as unknown as ContentfulEntry<BlogPost>[]; // Type assertion after filtering
+                setItems(blogPosts); // Now this should be safe
 
-                const assetIds = response.items.map(item => item.fields.image?.sys.id).filter(Boolean);
+                const assetIds = blogPosts
+                    .map(item => item.fields.image?.sys.id) // This returns string | undefined
+                    .filter((id): id is string => id !== undefined); // Filter out undefined values
+
+                // Fetch assets if there are any asset IDs
                 if (assetIds.length > 0) {
-                    const assetResponse = await client.getAssets({ 'sys.id[in]': assetIds.join(',') });
-                    const assetMap = {};
+                    const assetResponse = await client.getAssets({ 'sys.id[in]': assetIds });
+                    const assetMap: { [key: string]: string } = {};
                     assetResponse.items.forEach(asset => {
-                        assetMap[asset.sys.id] = asset.fields.file.url;
+                        // Check if asset.fields.file is defined
+                        if (asset.fields.file) {
+                            assetMap[asset.sys.id] = asset.fields.file.url;
+                        } else {
+                            console.warn(`Asset ${asset.sys.id} does not have a file.`);
+                        }
                     });
                     setAssets(assetMap);
                 }
@@ -47,7 +107,7 @@ export default function Blog() {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
-                    const index = Number(entry.target.dataset.index);
+                    const index = Number((entry.target as HTMLElement).dataset.index); // Cast to HTMLElement
                     setVisibleItems((prev) => {
                         const newVisibleItems = [...prev];
                         newVisibleItems[index] = true;

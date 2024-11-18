@@ -1,13 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import client from './contentfulClient';
 import Spinner from './Spinner';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 
+interface BlogPostFields {
+    title: string;
+    date: string;
+    image?: {
+        fields: {
+            file: {
+                url: string;
+            };
+        };
+    };
+    content: any; // Adjust this type based on your content structure
+}
+
+interface BlogPostEntry {
+    fields: BlogPostFields;
+}
+
 export default function BlogPost() {
     const { slug } = useParams();
     const navigate = useNavigate();
-    const [post, setPost] = useState(null);
+    const [post, setPost] = useState<BlogPostEntry | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -17,7 +34,7 @@ export default function BlogPost() {
         })
             .then(response => {
                 if (response.items.length > 0) {
-                    setPost(response.items[0]);
+                    setPost(response.items[0] as unknown as BlogPostEntry); // Type assertion here
                 } else {
                     console.error("Post not found");
                 }
@@ -76,4 +93,4 @@ export default function BlogPost() {
             </div>
         </div>
     );
-};
+}

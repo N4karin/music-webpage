@@ -6,7 +6,7 @@ import '../styles/globals.css';
 export default function About() {
     const [emailSubmitted, setEmailSubmitted] = useState(false);
     const [visibleItems, setVisibleItems] = useState(new Array(5).fill(false)); // Adjust the size based on your content
-    const itemRefs = useRef([]);
+    const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
 
     const data = [
         { left: 'Software', right: 'Ableton Live, After Effects, Davinci Resolve' },
@@ -21,17 +21,17 @@ export default function About() {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
-                    const index = Number(entry.target.dataset.index);
+                    const index = Number((entry.target as HTMLElement).dataset.index);
                     setVisibleItems((prev) => {
                         const newVisibleItems = [...prev];
                         newVisibleItems[index] = true;
                         return newVisibleItems;
                     });
-                    observer.unobserve(entry.target); // Stop observing after it becomes visible
+                    observer.unobserve(entry.target);
                 }
             });
         }, {
-            threshold: 0.1 // Trigger when 10% of the element is visible
+            threshold: 0.1
         });
 
         itemRefs.current.forEach((ref) => {
@@ -45,12 +45,15 @@ export default function About() {
         };
     }, []);
 
-    const handleSubmit = async (e) => {
+    
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        const form = e.currentTarget as HTMLFormElement;
         const formData = {
-            email: e.target.email.value,
-            subject: e.target.subject.value,
-            message: e.target.message.value,
+            email: form.email.value,
+            subject: form.subject.value,
+            message: form.message.value,
         };
 
         const JSONdata = JSON.stringify(formData);
@@ -67,7 +70,7 @@ export default function About() {
         try {
             const response = await fetch(endpoint, options);
             if (!response.ok) throw new Error(`Error: ${response.status}`);
-            const resData = await response.json();
+            await response.json();
             if (response.status === 200) {
                 setEmailSubmitted(true);
             } else {

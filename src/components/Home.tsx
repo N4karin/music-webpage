@@ -33,7 +33,7 @@ const columns = [
 ];
 
 export default function Home() {
-    const itemRefs = useRef([]);
+    const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
 
     useEffect(() => {
         AOS.init({ duration: 500, once: true });
