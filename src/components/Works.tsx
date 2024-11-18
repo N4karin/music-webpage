@@ -4,7 +4,7 @@ import YearSection from './YearSection';
 import Spinner from './Spinner';
 import AOS from 'aos';
 import "aos/dist/aos.css";
-import { Entry, EntrySys } from 'contentful';
+import { Entry, EntrySys, EntrySkeletonType } from 'contentful';
 
 // Define the fields structure for MusicWork
 interface MusicWorkFields {
@@ -20,11 +20,19 @@ interface MusicWorkFields {
     collaborators?: string;
     description: string;
     url: string;
+    fields: any;
+    contentTypeId: any;
 }
 
-// Extend the Entry type with MusicWorkFields and include contentTypeId
+// Extend EntrySkeletonType to create MusicWorkSkeleton
+interface MusicWorkSkeleton extends EntrySkeletonType<MusicWorkFields> {
+    contentTypeId: string; // Ensure this is included
+}
+
+// Extend the Entry type with MusicWorkFields
+// @ts-ignore
 interface MusicWorkEntry extends Entry<MusicWorkFields> {
-    sys: EntrySys & { // Extend EntrySys to include all required properties
+    sys: EntrySys & {
         contentType: {
             sys: {
                 id: string; // This is the contentTypeId
@@ -41,7 +49,7 @@ const Works = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        client.getEntries<MusicWorkEntry>({
+        client.getEntries<MusicWorkSkeleton>({
             content_type: 'musicWork',
             order: ['-sys.createdAt'],
         })
@@ -50,7 +58,8 @@ const Works = () => {
             setItems(response.items as MusicWorkEntry[]); // Cast response.items to MusicWorkEntry[]
 
             const assetIds = response.items
-                .map(item => item.fields.image?.sys.id)
+            // @ts-ignore
+                .map(item => item.fields.image?.sys?.id) // Use optional chaining
                 .filter((id): id is string => id !== undefined);
 
             if (assetIds.length > 0) {
