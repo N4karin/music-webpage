@@ -116,7 +116,7 @@ const YearSection: React.FC<YearSectionProps> = ({ year, filteredItems, assets, 
                                             <img
                                                 src={assets[item.fields.image.sys.id]}
                                                 alt={item.fields.name}
-                                                className={`image-rendering-smooth object-cover transition-transform duration-200 group-hover:scale-[1.05] ease-in-out w-full h-60 rounded-lg mb-4 border-2 shadow-md hover:shadow-lg filter contrast-[90%]`}
+                                                className={`image-rendering-smooth object-cover transition-transform duration-200 group-hover:scale-[1.05] ease-in-out w-full h-56 rounded-lg mb-4 border-2 shadow-md hover:shadow-lg filter contrast-[90%]`}
                                                 style={{
                                                     borderColor: extractColor(typeColors[item.fields.type]) || '#FFA07A',
                                                     borderWidth: '2px',

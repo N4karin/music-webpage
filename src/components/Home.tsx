@@ -64,7 +64,7 @@ export default function Home() {
     return (        
         <div className="flex-col pt-14">
             <div className="font-thin text-5xl pb-16" data-aos="fade-down">
-                <p>hi, my name is nakarin and i make music!</p>
+                <p>hi, my name is <span className="text-[#FFA07A]">nakarin</span> and i make music!</p>
                 <p className="pt-4">here are my latest works:</p>
             </div>
 

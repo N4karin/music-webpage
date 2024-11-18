@@ -154,13 +154,13 @@ export default function About() {
                     >
                         <form className="flex flex-col relative pt-4" onSubmit={handleSubmit}>
                             <label htmlFor="name">Name <span className="text-red-400">*</span></label>
-                            <input type="text" name="name" id="name" required placeholder="John Doe" className="text-black rounded-md border-indigo-500 dark:bg-gray-800 bg-gray-200 dark:text-gray-200 px-2 py-2 w-[320px]" />
+                            <input type="text" name="name" id="name" required placeholder="John Doe" className="text-black rounded-md border-indigo-500 dark:bg-gray-800 bg-gray-200 dark:text-gray-200 px-2 py-2 w-[300px]" />
 
                             <label htmlFor="email" className="pt-4">E-Mail Address <span className="text-red-400">*</span></label>
-                            <input type="email" name="email" id="email" required placeholder="john.doe@gmail.com" className="text-black rounded-md border-indigo-500 dark:bg-gray-800 bg-gray-200 dark:text-gray-200 px-2 py-2 w-[320px]" />
+                            <input type="email" name="email" id="email" required placeholder="john.doe@gmail.com" className="text-black rounded-md border-indigo-500 dark:bg-gray-800 bg-gray-200 dark:text-gray-200 px-2 py-2 w-[300px]" />
 
                             <label htmlFor="subject" className="pt-4">Subject <span className="text-red-400">*</span></label>
-                            <input type="text" name="subject" id="subject" required placeholder="Subject" className="text-black rounded-md border-indigo-500 dark:bg-gray-800 bg-gray-200 dark:text-gray-200 px-2 py-2 w-[320px]" />
+                            <input type="text" name="subject" id="subject" required placeholder="Subject" className="text-black rounded-md border-indigo-500 dark:bg-gray-800 bg-gray-200 dark:text-gray-200 px-2 py-2 w-[300px]" />
 
                             <label htmlFor="message" className="pt-4">Message <span className="text-red-400">*</span></label>
                             <textarea name="message" id="message" className="text-sm px-2 py-2 h-32 text-black rounded-md border-indigo-500 dark:bg-gray-800 bg-gray-200 dark:text-gray-200" placeholder="Let's talk about..."></textarea>
