@@ -1,33 +1,36 @@
+import express from 'express';
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-const fromEmail = process.env.FROM_EMAIL;
+const api_key = process.env.RESEND_API_KEY;
 
-export async function POST(req) {
-    const body = await req.json();
-    const { email, subject, message } = body;
+const router = express.Router();
+const fromEmail = process.env.FROM_EMAIL;
+const resend = new Resend(`"${api_key}"`);
+
+// Define the POST route for sending emails
+router.post('/', async (req, res) => {
+    const { email, subject, message } = req.body; // Extracting values from request body
 
     try {
-        const { data, error } = await resend.emails.send({
-            from: fromEmail,
-            to: ['nakarin@gmail.com', email],
+        // Send the email using Resend
+        const response = await resend.sendEmail({
+            from: fromEmail, // Your sender email
+            to: ['nakasrj@gmail.com', email], // List of recipients
             subject: `Contact via nakarin.cc: ${subject}`,
-            react: (
-                <>
-                    <p>From {email} </p>
-                    <p>Thank you for contacting me! Here is a copy of your message!</p>
-                    <p>{message}</p>
-                </>
-            ),
+            html: `
+                <p>From: ${email}</p>
+                <p>Thank you for contacting me! Here is a copy of your message:</p>
+                <p>${message}</p>
+            `, // HTML content of the email
         });
 
-        if (error) {
-            return new Response(JSON.stringify({ error }), { status: 500 });
-        }
-
-        return new Response(JSON.stringify(data), { status: 200 });
+        // Respond with a success message
+        res.status(200).json({ status: 'success', message: 'Email sent successfully!', response });
     } catch (error) {
-        console.error(error);
-        return new Response(JSON.stringify({ error: 'An unexpected error occurred.' }), { status: 500 });
+        console.error('Error sending email:', error);
+        res.status(500).json({ status: 'error', message: 'Failed to send email.' });
     }
-}
+});
+
+// Export the router
+export default router;

@@ -55,10 +55,10 @@ export default function About() {
             subject: form.subject.value,
             message: form.message.value,
         };
-
+    
         const JSONdata = JSON.stringify(formData);
-        const endpoint = "/api/send";
-
+        const endpoint = "/api/send"; // Use the relative path for Vercel
+    
         const options = {
             method: "POST",
             headers: {
@@ -66,7 +66,7 @@ export default function About() {
             },
             body: JSONdata,
         };
-
+    
         try {
             const response = await fetch(endpoint, options);
             if (!response.ok) throw new Error(`Error: ${response.status}`);
@@ -77,9 +77,11 @@ export default function About() {
                 alert('Something went wrong, please try again.');
             }
         } catch (error) {
+            console.log(error);
             alert('Failed to send message. Please check your network connection.');
         }
     };
+    
 
     return (
         <div className="flex-col space-y-8 max-w-[1600px] items-center mx-auto">
