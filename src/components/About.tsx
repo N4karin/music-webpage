@@ -72,7 +72,8 @@ export default function About() {
         try {
             console.log('1');
             const response = await fetch(endpoint, options);
-            if (!response.ok) throw new Error(`Error: ${response.status}`);
+            console.log('1.5');
+            if (!response.ok) throw new Error(`Error: ${response.status} ${response}`);
             console.log('2');
             await response.json();
             console.log('3');
