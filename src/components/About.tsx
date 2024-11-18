@@ -48,8 +48,8 @@ export default function About() {
 
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        console.log('API Key:', process.env.RESEND_API_KEY);
-        console.log('trying to send mail now...');
+        console.log('2 API Key:', process.env.RESEND_API_KEY);
+        console.log('2 trying to send mail now...');
         e.preventDefault();
         const form = e.currentTarget as HTMLFormElement;
         const formData = {

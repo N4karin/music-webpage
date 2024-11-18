@@ -1,19 +1,20 @@
-// src/api/send.js
 import { Resend } from 'resend';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 
 const api_key = process.env.RESEND_API_KEY;
 const fromEmail = process.env.FROM_EMAIL;
-const resend = new Resend(`'${api_key}'`);
+const resend = new Resend(`${api_key}`);
 
 export default async function handler(req, res) {
-    console.log('API Key:', api_key);
-    console.log('From Email:', fromEmail);
 
     if (req.method === 'POST') {
         const { email, subject, message } = req.body;
 
         try {
-            const response = await resend.sendEmail({
+            const response = await resend.emails.send({
                 from: 'nakasrj@gmail.com',
                 to: ['nakasrj@gmail.com', email],
                 subject: `Contact via nakarin.cc: ${subject}`,
