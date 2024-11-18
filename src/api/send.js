@@ -11,7 +11,7 @@ export default async function handler(req, res) {
 
     if (req.method === 'POST') {
         console.log("test 1:", api_key)
-        onsole.log("test 2:", fromEmail)
+        console.log("test 2:", fromEmail)
         const { email, subject, message } = req.body;
 
         try {
