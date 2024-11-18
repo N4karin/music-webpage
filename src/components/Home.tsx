@@ -8,7 +8,8 @@ const columns = [
         imgSrc: "/latest/latestOriginal.jpg",
         imgAlt: "latestOriginal",
         link: "https://www.youtube.com/watch?v=zaLPtByJEG0",
-        description: "空に向かおう feat. KAFU (transl. towards the sky)",
+        description: "空に向かおう feat. KAFU",
+        subtext: "(transl. towards the sky)",
         date: "march 2024",
         color: "#6A9BD1"
     },
@@ -17,7 +18,8 @@ const columns = [
         imgSrc: "/latest/latestRemix.jpg",
         imgAlt: "latestRemix",
         link: "https://www.youtube.com",
-        description: "陽キャJKに憧れる陰キャJKの歌 (original by 音莉飴)",
+        description: "陽キャJKに憧れる陰キャJKの歌",
+        subtext: "original by 音莉飴",
         date: "november 2024",
         color: "#A4D65E"
     },
@@ -26,7 +28,8 @@ const columns = [
         imgSrc: "/latest/latestTouhou.jpg",
         imgAlt: "latestTouhou",
         link: "https://c102-meditations.netlify.app/",
-        description: "Meditations (4-Track EP with Kurin T)",
+        description: "Meditations",
+        subtext: "4-Track EP with Kurin T",
         date: "august 2023",
         color: "#FFA07A"
     }
@@ -97,6 +100,7 @@ export default function Home() {
 
                             <div>
                                 <h2 className="font-bold text-3xl pb-2">{column.description}</h2>
+                                <h3 className="font-thin text-md pb-2">{column.subtext}</h3>
                                 <p className="font-thin pt-4">{column.date}</p>
                             </div>
                         </div>
