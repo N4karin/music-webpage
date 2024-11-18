@@ -45,9 +45,11 @@ export default function About() {
         };
     }, []);
 
-    
+
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        console.log('API Key:', process.env.RESEND_API_KEY);
+        console.log('trying to send mail now...');
         e.preventDefault();
         const form = e.currentTarget as HTMLFormElement;
         const formData = {
@@ -55,10 +57,10 @@ export default function About() {
             subject: form.subject.value,
             message: form.message.value,
         };
-    
+
         const JSONdata = JSON.stringify(formData);
         const endpoint = "/api/send"; // Use the relative path for Vercel
-    
+
         const options = {
             method: "POST",
             headers: {
@@ -66,14 +68,18 @@ export default function About() {
             },
             body: JSONdata,
         };
-    
+
         try {
+            console.log('1');
             const response = await fetch(endpoint, options);
             if (!response.ok) throw new Error(`Error: ${response.status}`);
+            console.log('2');
             await response.json();
+            console.log('3');
             if (response.status === 200) {
                 setEmailSubmitted(true);
             } else {
+                console.log('4');
                 alert('Something went wrong, please try again.');
             }
         } catch (error) {
@@ -81,7 +87,7 @@ export default function About() {
             alert('Failed to send message. Please check your network connection.');
         }
     };
-    
+
 
     return (
         <div className="flex-col space-y-8 max-w-[1600px] items-center mx-auto">
@@ -101,7 +107,7 @@ export default function About() {
                         </p>
                         <h2 className="font-thin text-5xl pb-2 fade-in" data-index={1}>tools</h2>
                         <div>
-                        <h1 className="font-thin text-5xl pb-4">tools</h1>
+                            <h1 className="font-thin text-5xl pb-4">tools</h1>
                             <table className="min-w-full">
                                 <thead>
                                     <tr></tr>
