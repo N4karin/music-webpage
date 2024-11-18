@@ -3,7 +3,6 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-
 const api_key = process.env.RESEND_API_KEY;
 const fromEmail = process.env.FROM_EMAIL;
 const resend = new Resend(`${api_key}`);
@@ -11,6 +10,8 @@ const resend = new Resend(`${api_key}`);
 export default async function handler(req, res) {
 
     if (req.method === 'POST') {
+        console.log("test 1:", api_key)
+        onsole.log("test 2:", fromEmail)
         const { email, subject, message } = req.body;
 
         try {

@@ -2,6 +2,9 @@
 import { Button } from "@headlessui/react";
 import { useState, useEffect, useRef } from "react";
 import '../styles/globals.css';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export default function About() {
     const [emailSubmitted, setEmailSubmitted] = useState(false);
