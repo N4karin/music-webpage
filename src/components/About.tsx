@@ -2,9 +2,6 @@
 import { Button } from "@headlessui/react";
 import { useState, useEffect, useRef } from "react";
 import '../styles/globals.css';
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 export default function About() {
     const [emailSubmitted, setEmailSubmitted] = useState(false);
@@ -51,19 +48,20 @@ export default function About() {
 
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault(); // Prevent the default form submission behavior
         console.log('2 API Key:', process.env.RESEND_API_KEY);
         console.log('2 trying to send mail now...');
-        e.preventDefault();
+    
         const form = e.currentTarget as HTMLFormElement;
         const formData = {
             email: form.email.value,
             subject: form.subject.value,
             message: form.message.value,
         };
-
+    
         const JSONdata = JSON.stringify(formData);
         const endpoint = "/api/send"; // Use the relative path for Vercel
-
+    
         const options = {
             method: "POST",
             headers: {
@@ -71,7 +69,7 @@ export default function About() {
             },
             body: JSONdata,
         };
-
+    
         try {
             console.log('1');
             const response = await fetch(endpoint, options);

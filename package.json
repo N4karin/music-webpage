@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://www.nakarin.cc",
   "scripts": {
     "start": "node server.js",
     "dev": "concurrently \"npm run start\" \"npm run vite\"",
