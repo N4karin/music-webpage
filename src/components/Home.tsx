@@ -17,7 +17,7 @@ const columns = [
         title: "remix",
         imgSrc: "/latest/latestRemix.jpg",
         imgAlt: "latestRemix",
-        link: "https://www.youtube.com",
+        link: "https://youtu.be/W91ZXLHOKfw?si=aOjIMWBglSigqs3Y",
         description: "陽キャJKに憧れる陰キャJKの歌",
         subtext: "original by 音莉飴",
         date: "november 2024",
