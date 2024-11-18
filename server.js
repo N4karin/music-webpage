@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import sendRoute from './src/api/send/route.js'; // Adjust the path as needed
+import sendRoute from './src/api/send.js'; // Adjust the path as needed
 import dotenv from 'dotenv'; // Import dotenv
 
 dotenv.config(); // Load environment variables from .env file
