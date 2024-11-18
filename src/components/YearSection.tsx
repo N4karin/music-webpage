@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface YearSectionProps {
     year: number;
@@ -27,6 +27,7 @@ interface YearSectionProps {
 const YearSection: React.FC<YearSectionProps> = ({ year, filteredItems, assets, typeColors, isLoading }) => {
     const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
     const yearRef = useRef<HTMLDivElement | null>(null); // Ref for the year element
+    const [animatedItems, setAnimatedItems] = useState<boolean[]>(new Array(filteredItems.length).fill(false)); // Track animated state for items
 
     const extractColor = (bgColor: string) => {
         const match = bgColor.match(/bg-\[(#\w{6})\]/);
@@ -35,6 +36,7 @@ const YearSection: React.FC<YearSectionProps> = ({ year, filteredItems, assets, 
 
     useEffect(() => {
         itemRefs.current = itemRefs.current.slice(0, filteredItems.length);
+        setAnimatedItems(new Array(filteredItems.length).fill(false)); // Reset animated state on filteredItems change
     }, [filteredItems]);
 
     useEffect(() => {
@@ -42,45 +44,39 @@ const YearSection: React.FC<YearSectionProps> = ({ year, filteredItems, assets, 
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
-                        // Delay the fade-down effect for the year heading
-                        if (yearRef.current) {
-                            setTimeout(() => {
-                                yearRef.current?.classList.remove('invisible');
-                                yearRef.current?.classList.add('visible');
-                            }, 100); // Adjust the delay (in milliseconds) as needed
-                        }
-    
-                        // Fade in items
                         const indexAttr = entry.target.getAttribute('data-index');
-                        const delay = (indexAttr !== null ? Number(indexAttr) : 0) * 0.1;
-                        
-                        // Assert entry.target as HTMLElement
-                        const targetElement = entry.target as HTMLElement;
-                        targetElement.style.transitionDelay = `${delay}s`;
-                        targetElement.classList.remove('invisible');
-                        targetElement.classList.add('visible');
-                    } else {
-                        const targetElement = entry.target as HTMLElement;
-                        targetElement.style.transitionDelay = '0s';
-                        targetElement.classList.remove('visible');
-                        targetElement.classList.add('invisible');
+                        const index = indexAttr !== null ? Number(indexAttr) : -1;
+
+                        if (index >= 0 && !animatedItems[index]) {
+                            // Animate only if it hasn't been animated yet
+                            const targetElement = entry.target as HTMLElement;
+                            targetElement.classList.remove('invisible');
+                            targetElement.classList.add('visible');
+                            
+                            // Update animated state
+                            setAnimatedItems((prev) => {
+                                const newAnimatedItems = [...prev];
+                                newAnimatedItems[index] = true;
+                                return newAnimatedItems;
+                            });
+                        }
                     }
                 });
             }, {
                 rootMargin: '0px 0px',
                 threshold: 0,
             });
-    
+
             // Observe the year element for fade effect
             if (yearRef.current) {
                 observer.observe(yearRef.current);
             }
-    
+
             // Observe each item
             itemRefs.current.forEach((ref) => {
                 if (ref) observer.observe(ref);
             });
-    
+
             return () => {
                 if (yearRef.current) {
                     observer.unobserve(yearRef.current);
@@ -90,7 +86,7 @@ const YearSection: React.FC<YearSectionProps> = ({ year, filteredItems, assets, 
                 });
             };
         }
-    }, [isLoading]);
+    }, [isLoading, animatedItems]); // Add animatedItems to the dependency array
 
     // Sort filteredItems by createDate in descending order
     const sortedItems = [...filteredItems].sort((a, b) => {
@@ -110,7 +106,7 @@ const YearSection: React.FC<YearSectionProps> = ({ year, filteredItems, assets, 
                         sortedItems.map((item, index) => (
                             <div
                                 ref={(el) => (itemRefs.current[index] = el)}
-                                className="item invisible group"
+                                className={`item ${animatedItems[index] ? 'visible' : 'invisible'} group`}
                                 data-index={index}
                                 key={item.id}
                             >
