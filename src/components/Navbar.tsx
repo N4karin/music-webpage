@@ -1,4 +1,4 @@
-import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/react";
+import { Disclosure, DisclosurePanel } from "@headlessui/react";
 import { Link, useLocation } from "react-router-dom";
 
 export default function Navbar() {
@@ -7,7 +7,7 @@ export default function Navbar() {
 
     return (
         <Disclosure as="nav" className="w-32 2xl:min-w-52 xl:min-w-52 lg:min-w-52 h-full rounded-l-xl dark:border-gray-700 border-[#B9E4C9] border-r-2">
-            {({ open, close }) => (
+            {({  }) => (
                 <>
                     <div className="flex flex-col h-full overflow-y-auto">
                         {/* Title Section */}
