@@ -114,7 +114,8 @@ const Works = () => {
         Touhou: 'bg-[#f8c8a1]',
     };
 
-    const years = Array.from({ length: 10 }, (_, i) => 2024 - i);
+    const currentYear = new Date().getFullYear();
+    const years = Array.from({ length: 10 }, (_, i) => currentYear - i);
     const filteredItemsByYear = years.map(year => ({
         year,
         filteredItems: filterItemsByYear(items, year),

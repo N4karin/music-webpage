@@ -17,7 +17,7 @@ const columns = [
         title: "remix",
         imgSrc: "/latest/latestRemix.jpg",
         imgAlt: "latestRemix",
-        link: "https://www.youtube.com",
+        link: "https://www.youtube.com/watch?v=W91ZXLHOKfw",
         description: "陽キャJKに憧れる陰キャJKの歌",
         subtext: "original by 音莉飴",
         date: "november 2024",
@@ -27,10 +27,10 @@ const columns = [
         title: "touhou",
         imgSrc: "/latest/latestTouhou.jpg",
         imgAlt: "latestTouhou",
-        link: "https://c102-meditations.netlify.app/",
-        description: "Meditations",
-        subtext: "4-Track EP with Kurin T",
-        date: "august 2023",
+        link: "https://www.youtube.com/watch?v=irn52s9ue68",
+        description: "ten days",
+        subtext: "10-track Touhou Album",
+        date: "may 2025",
         color: "#FFA07A"
     }
 ];
@@ -67,7 +67,7 @@ export default function Home() {
     return (        
         <div className="flex-col pt-14">
             <div className="font-thin text-5xl pb-16" data-aos="fade-down">
-                <p>hi, my name is <span className="text-[#FFA07A]">nakarin</span> and i make music!</p>
+                <p>hi, my name is <span className="underline decoration-1 underline-offset-4">nakarin</span> and i make music!</p>
                 <p className="pt-4">here are my latest works:</p>
             </div>
 
@@ -81,7 +81,10 @@ export default function Home() {
                             data-aos="fade-up"
                             data-aos-delay={index * 200} // Set delay based on index
                         >
-                            <div className="font-thin text-5xl pb-8">
+                            <div 
+                            className="font-thin text-5xl pb-8"
+                            style={{ color: column.color }}
+                            >
                                 <h1>{column.title}</h1>
                             </div>
                             <div
@@ -100,7 +103,7 @@ export default function Home() {
 
                             <div>
                                 <h2 className="font-bold text-3xl pb-2">{column.description}</h2>
-                                <h3 className="font-thin text-md pb-2">{column.subtext}</h3>
+                                {/* <h3 className="font-thin text-md pb-2">{column.subtext}</h3> */}
                                 <p className="font-thin pt-4">{column.date}</p>
                             </div>
                         </div>
